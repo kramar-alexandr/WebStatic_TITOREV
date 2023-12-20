@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title></title>
+        <meta name="description" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            tr.group1,
+            tr.group1:hover {
+                background-color: #ddd !important;
+                color: blue;
+            }
+
+            tr.group2,
+            tr.group2:hover {
+                background-color: #e8e8e8 !important;
+                font-style: oblique;
+                font-weight: bold;
+                font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+            }
+
+            tr.group3,
+            tr.group3:hover {
+                background-color: #f3f3f3 !important;
+                font-style: italic;
+                font-size: large;
+                font-family: "Times New Roman", Times, serif;
+                color: rgb(116, 37, 0);
+            }
+
+            .enlarge-onhover {
+                width: 30px;
+                height: 30px;
+            }
+
+            .enlarge-onhover:hover {
+                width: 200%;
+                height: 200%;
+            }
+
+            #group1Filters {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 5px;
+            }
+
+            .checkbox_label {
+                padding: auto;
+            }
+
+            .select-container0 {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .select-container0 {
+                position: relative;
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .select-container0 .delete-icon {
+                position: absolute;
+                top: 4px;
+                right: -20px;
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+                color: #ff0000;
+            }
+
+            .select-container0 .delete-icon:hover {
+                filter: brightness(120%);
+            }
+
+            .select-container1 {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .select-container1 {
+                position: relative;
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .select-container1 .delete-icon {
+                position: absolute;
+                top: 4px;
+                right: -20px;
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+                color: #ff0000;
+            }
+
+            .select-container1 .delete-icon:hover {
+                filter: brightness(120%);
+            }
+
+            .select-container2 {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .select-container2 {
+                position: relative;
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .select-container2 .delete-icon {
+                position: absolute;
+                top: 4px;
+                right: -20px;
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+                color: #ff0000;
+            }
+
+            .select-container2 .delete-icon:hover {
+                filter: brightness(120%);
+            }
+
+            .img-wrap {
+                padding-right: 0.5rem;
+                width: 70px;
+            }
+
+            .img-wrap img {
+                max-width: 100%;
+                max-height: 100px;
+            }
+
+            .img-wrap:hover {
+                position: absolute;
+                width: 200px;
+                min-height: 200px;
+                background-color: #fcfcfc;
+                border: 1px solid #333333;
+                border-radius: 0.5rem;
+            }
+
+            .img-wrap:hover img {
+                width: 200px;
+                max-height: fit-content;
+                padding: 0.5rem;
+            }
+
+            .btn_submit {
+                height: 33px;
+                width: 200px;
+                text-align: center;
+                background-color: #1EAA49;
+                border-radius: 5px;
+                border: none;
+                color: white;
+            }
+
+            .w-33 {
+                width: 33%;
+                color: gray;
+            }
+
+            .sum {
+                border: 1px solid green;
+                border-radius: 5px;
+                height: 33px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .bg-lightgreen {
+                height: 100%;
+                background: #1eaa489c;
+                border-radius: 0 4px 4px 0;
+            }
+            .bg-lightblue {
+                height: 100%;
+                background: lightblue;
+                border-radius: 4px;
+            }
+
+            i {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 16px;
+                color: gray;
+            }
+
+            .circle-btn {
+                height: 40px;
+                width: 40px;
+                border-radius: 20px;
+                border: 1px solid darkgray;
+            }
+
+            .gap-2 {
+                gap: 10px;
+            }
+
+            .shapka {
+                display: flex;
+                border: 3px solid #007bff;
+                border-radius: 15px;
+                padding: 5px 10px;
+            }
+            .shapka h3 {
+                font-weight:600;
+                color: #294975;
+                margin-bottom: 0px;
+            }
+            .shapka {
+                color: #3E7482;
+                font-weight: bolder;
+            }
+            .client {
+                color: limegreen;
+            }
+            .balance {
+                color: red;
+            }
+            .rate {
+                font-size: 24px;
+                border: 2px solid rgb(48, 171, 212);
+                height: 40px;
+            }
+            .rate{
+                color: red;
+            }
+            .filters {
+                padding: 5px;
+                border: 2px solid #007bff;
+                border-radius: 8px;
+            }
+            thead tr, tfoot tr {
+                background-color: #4fa0f74d;
+            }
+            .gap-3{
+                gap: 30px;;
+            }        
+        </style>
+    </head>
+    <body>
+        <div class="modal" tabindex="-1" role="dialog" id="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header"><h5 class="modal-title text-center">Інформація</h5></div>
+                    <div class="modal-body"><p id="modal_message">Замовлення відправлене</p></div>
+                    <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" id="done">OK</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="padding: 0px 0px; min-height: calc(100vh - 2rem);">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="Navbar">
+  <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+      <div class="gap-2 d-flex align-items-center">
+          <button id="toggleFilterArrow" class="circle-btn"><i class="bi bi-caret-left-fill"></i></button>
+          <span>Згорнути фільтри</span>
+      </div>
+      <div class="d-flex align-items-center justify-content-between gap-3">
+          <div class="sum" style="font-weight: bolder;">
+              <div class="d-flex align-items-center px-3"><span>Сума замовлення:</span></div>
+              <div class="bg-lightgreen px-3 d-flex align-items-center">
+                  <span id="total_sum">0</span>
+              </div>
+          </div>
+          <div>
+              <button class="btn_submit" onclick="addRowToModalConfirm()">Надіслати замовлення</button>
+          </div>
+      </div>
+      <div class="gap-2 w-25 d-flex justify-content-end align-items-center">
+          <span>Згорнути шапку</span>
+          <button id="toggleShapkaArrow" class="circle-btn"><i class="bi bi-caret-up-fill"></i></button>
+      </div>
+  </div>
+</nav>
+<div class="container-fluid" style="min-height: calc(100vh - 88px);">
+    <div class="row pt-3">
+        <div class="col-2 pr-0" id="filters">
+            <header class="sticky-top" style="top: 70px;">
+                <div id="filters" class="filters">
+                    <p class="mb-0 mb-1 h4">
+                        <i class="fas fa-filter"></i>
+                        <strong class="text-primary">Фільтри</strong>
+                    </p>
+                    <div class="row">
+                        <div class="col">
+                            Бренд
+                            <div class="d-flex flex-wrap align-items-center" id="select-container1"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            Тип
+                            <div id="select-container0"></div>
+                        </div>
+                    </div>
+<!--style="display: none;"-->
+                    <div class="row" id="subtype" style="display: none;">
+                        <div class="col">
+                            Підтип
+                            <div id="select-container3"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            Об'єм
+                            <div id="select-container2"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col">
+
+                            <div class="form-check">
+                                <label class="form-check-label" for="orderedFilterInput">
+                                    <input id="orderedFilterInput" class="form-check-input" type="checkbox"
+                                        name="OnlyOrdered" value="OnlyOrdered">
+                                    Тількі замовлене.
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--<div class="text-center pt-1 text-primary">
+                        <span>Скинути фільтри</span>
+                    </div>-->
+                </div>
+                
+                <div id="filters" class="filters mt-3">
+                    <p class="mb-0 mb-1 h5">
+                        <i class="fas fa-clipboard"></i>
+                        <strong class="text-primary">Замовлення</strong>
+                    </p>
+                    <p class="mb-1 mt-2">
+                        <strong class="mt-1"></strong>
+                    </p>
+                    <div id="orderByQty" style="overflow-x: hidden; overflow-y: auto">
+                    </div>
+                </div>
+                
+                <div class="filters mt-3">
+                    <p class="mb-0 mb-1 h5">
+                        <i class="fas fa-external-link-alt"></i>
+                        <strong class="text-primary">Посилання</strong>
+                    </p>
+                    <p style="margin-bottom: 0;"><a href="https://s.erpjs.biz:1302/PartnerPrices.xlsx" target="_blank">Посилання на прайс Partner</a></p>
+                    <p style="margin-bottom: 0;"><a href="https://drive.google.com/drive/folders/1jBO4xJboYcl07USkAjzHYbxxvimKYk_Y" target="_blank">Посилання на фото товару</a></p>
+                    <p style="margin-bottom: 0;"><a href="https://hitmarket.ua/media/feed/Opt_price_1_jksdnvjdfj.yml" target="_blank">Посилання на прайс у YML</a></p>
+                </div>
+                <!--<div id="filters" class="filters mt-3">
+                    <p class="mb-0 mb-1 h5">
+                        <i class="fas fa-clipboard"></i>
+                        <strong class="text-primary">Замовленно по категоріям</strong>
+                    </p>
+                    <p class="mb-1 mt-2">
+                        <strong class="mt-1"></strong>
+                    </p>
+                    <div id="orderByCategory" style="overflow-x: hidden; overflow-y: auto">
+                    </div>
+                </div>-->
+            </header>
+        </div>
+        <div class="col-10" id="main-content">
+            <div class="shapka justify-content-between mb-4" id="shapka">
+                <div class="d-flex flex-column w-50">
+                    <h3>КОМЕРЦІЙНА ПРОПОЗИЦІЯ</h3>
+                    <div>Кліент: <span class="client" id="curname"></span></div>
+                    <div>Баланс: <span class="balance" id="curdebt"></span></div>
+                    <div class="balance" id="ratediv" style="display:none;">Курс: <span id="ratefield"></span></div>
+                    <div>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#passwordModal" onclick="">Змінити пароль</button>
+                    </div>
+                </div>
+                <div class="w-50 d-flex flex-column justify-content-end align-items-end text-right">
+                    <img style="margin-bottom: -5px;" src="./logo.png" alt="HIT MARKET logo" width="382px">
+                    <a href="http://www.hitmarket.ua">www.hitmarket.ua</a>
+                    <a href="mailto:zakaz@hitmarket.com.ua">zakaz@hitmarket.com.ua</a>
+                    <a href="tel:+380964749409">+38 (096) 474 94 09</a>
+                </div>
+            </div>
+            <!-- <div class="d-flex  mt-3 mb-3">
+                <div class="col-8 d-flex justify-content-start px-0 ">
+                     <button id="sendOrderBtn" style="visibility: hidden" type="button" class="btn btn-primary">Send order</button>
+                    <button type="button" class="btn btn-primary btn-lg w-100 mr-5"
+                        onclick="addRowToModalConfirm()">Замовити</button>
+
+                    <button type="button" class="btn btn-danger btn-lg w-100" data-toggle="modal"
+                        data-target="#cancelOrderModal">Очистити</button>
+                </div>
+                <div class="px-0 col-4 text-end" style="font-weight: bolder;">
+                    <div class="d-flex justify-content-end">Сума замовлення:&nbsp;<div id="total_sum"
+                            class="text-success pr-1"> 0 </div> $</div>
+                    <div class="d-flex justify-content-end"> 
+                            <div id="total_weight" class="text-primary pr-1"> 0 </div>Kg 
+                            &nbsp;<div id="total_volume" class="text-danger pr-1"> 0 </div>m³
+                        </div>
+
+
+                </div>
+
+            </div> -->
+
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>level1</th>
+                        <th>level2</th>
+                        <th>level3</th>
+                        <th>level4</th>
+                        <th>Код</th>
+                        <th>Назва</th>
+                        <th>Зображення</th>
+                        <th>Залишок</th>
+                        <th>Ціна1</th>
+                        <th>Ціна2</th>
+                        <th>Замовлено</th>
+                        <th>Сума</th>
+                        <th>Об'єм</th>
+                        <th>Вага</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>level1</th>
+                        <th>level2</th>
+                        <th>level3</th>
+                        <th>level4</th>
+                        <th>Код</th>
+                        <th>Назва</th>
+                        <th>Зображення</th>
+                        <th>Залишок</th>
+                        <th>Ціна1</th>
+                        <th>Ціна2</th>
+                        <th>Замовлено</th>
+                        <th>Сума</th>
+                        <th>Об'єм</th>
+                        <th>Вага</th>
+                    </tr>
+                </tfoot>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="page-footer font-small" style="background-color: whitesmoke; width: 100%;">
+    <div class="footer-copyright text-center py-1">© 2023 Copyright:
+        <a href="https://erpjs.biz/" target="_blank"> ERPJS </a>
+    </div>
+</footer>
+<div class="modal" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Інформація</h5>
+            </div>
+            <div class="modal-body">
+                <p id="modal_message">Замовлення відправлене</p>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal"
+                    aria-label="Close" id="done">OK</button></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">Змінити пароль</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрити">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="newPassword">Новий пароль</label>
+                        <input type="password" class="form-control" id="newPassword" placeholder="Введіть новий пароль">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Повторити пароль</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Повторіть новий пароль">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                <button id="changePasswordConfirm" type="button" class="btn btn-primary" disabled>Зберегти пароль</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="confirmOrderModal" class="modal h-75" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="max-height: calc(100vh - 80px); overflow:hidden;">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Форма відправки замовлення</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height: 50vh; overflow-y: auto;">
+                <table class="table-sm table-bordered table-striped table-curved">
+                    <thead>
+                        <tr>
+                            <th>Код</th>
+                            <th>Назва</th>
+                            <th>Ціна</th>
+                            <th>Кількість</th>
+                            <th>Сума</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyIDforConfirm">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer d-block" style="font-weight: bolder;">
+                
+                <div class="d-flex justify-content-start align-items-center ml-1">
+                    <div class="form-check" style="font-size: x-large;">
+                        <input type="checkbox" id="isSurender" style="width: 1.25rem; height: 1.25rem; margin-top: 7px;" class="form-check-input" />
+                        <label class="form-check-label text-danger" style="padding-left: 1rem; padding-bottom: 1rem;" for="exampleCheck1">
+                            Замовлення підтверджую!
+                        </label>
+                    </div>    
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center ">
+                    <div class="d-flex justify-content-start align-items-center ">
+                        <button id="sendOrderBtn" type="button" style="min-width: 100px;" class="btn btn-primary">Надіслати</button>
+                        <button type="button" class="btn btn-secondary" style="min-width: 100px; margin-left: 10px;" data-dismiss="modal">Відміна</button>    
+                    </div>
+                    <div class="d-flex justify-content-end " style="text-decoration: underline; font-size: x-large;">
+                        Всього:&nbsp;
+                        <div id="confirmTotal" class="text-success pr-1"> 0 </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div id="cancelOrderModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Дійсно очистити замовлення?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelOrderBtn" type="button" class="btn btn-danger">Очистити</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        let isShowGroups = false;
+        const roundValue = 10000;
+        const roundSum = 100;
+        const queryString = window.location.search;
+        const { origin, pathname } = window.location;
+
+        const urlParams = new URLSearchParams(queryString);
+        let pricelist = urlParams.get('pricelist');
+        // const contact = urlParams.get('contact');
+        let resultData = {
+            data: [],
+            totalSum: 0,
+            plUuid: pricelist,
+            totalV: 0,
+            totalW: 0
+            // cuUuid: contact
+        };
+        
+        const sendBtn = document.getElementById('sendOrderBtn');
+        const cancelBtn = document.getElementById('cancelOrderBtn');
+        // sendBtn.style.visibility = contact ? 'visible' : 'hidden';
+
+        const calcCategoryDivHeight = () => {
+            //const divElement = document.getElementById('orderByCategory');
+            const divElementQty = document.getElementById('orderByQty');
+
+            /*const rect = divElement.getBoundingClientRect();
+            const distanceToViewportBottom = window.innerHeight - rect.bottom;
+            divElement.style.maxHeight = (5*16 + distanceToViewportBottom) + 'px';*/
+            
+            const rect1 = divElementQty.getBoundingClientRect();
+            const distanceToViewportBottom1 = window.innerHeight - rect1.bottom;
+            divElementQty.style.maxHeight = (5*16 + distanceToViewportBottom1) + 'px';
+        };
+
+        const addListeners = () => {
+            sendBtn.addEventListener('click', (e) => {
+                const isSurender = document.getElementById('isSurender').checked;
+                if (!isSurender) return;
+                $('#confirmOrderModal').modal('hide');
+                sendOrder(1);
+            });
+            cancelBtn.addEventListener('click', (e) => {
+                $('#cancelOrderModal').modal('hide');
+                sendOrder(-1);
+                window.location.reload();
+            });
+            document.getElementById('done').addEventListener('click', () => {
+                window.location.reload();
+            });
+            
+            //changePasswordConfirm
+            document.getElementById('changePasswordConfirm').addEventListener('click', () => {
+                const password1 = $('#newPassword')[0].value;
+                const password2 = $('#confirmPassword')[0].value;
+                if(password1 && password2 && password1!=='' && password2!=='' && password1==password2){
+                  $('#passwordModal').modal('hide');
+                  const changePasJS = `{"password":"${password1}"}`;
+                  console.log('changePasJS',changePasJS);
+                  const url = `./WebchagePasswordForCustomer.hal`; // ?pricelist=${pricelist}&contact=${contact}
+                  const xmlhttp = new XMLHttpRequest();
+                  xmlhttp.open("POST", url, false);
+                  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                  xmlhttp.send(changePasJS);
+                  const result = xmlhttp.responseText;
+                  console.log('result',result);
+                  if(result=="ok"){
+                    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+                    window.location.reload();
+                  }
+                }
+
+            });
+            
+            
+            document.getElementById('newPassword').addEventListener('input', () => {
+                const password1 = $('#newPassword')[0].value;
+                const password2 = $('#confirmPassword')[0].value;
+                if(password1 && password2 && password1!=='' && password2!=='' && password1==password2){
+                  $('#changePasswordConfirm').prop('disabled', false);
+                } else {
+                  $('#changePasswordConfirm').prop('disabled', true);
+                }
+                console.log(password1 + ' ' + password2);
+            });
+            document.getElementById('confirmPassword').addEventListener('input', () => {
+                const password1 = $('#newPassword')[0].value;
+                const password2 = $('#confirmPassword')[0].value;
+
+                if(password1 && password2 && password1!=='' && password2!=='' && password1==password2){
+                  $('#changePasswordConfirm').prop('disabled', false);
+                } else {
+                  $('#changePasswordConfirm').prop('disabled', true);
+                }
+                console.log(password1 + ' ' + password2);
+            });
+                            
+        };
+
+        // const createHeader = (html) => {
+        //     const header = document.getElementById('header');
+        //     header.innerHTML = html;
+        // };
+        
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        
+        const getMainData = () => {
+            if(pricelist){
+              if(pricelist.length!=44){
+                pricelist = getCookie('pricelist');
+              }
+            }
+            const url = `./WebgetItemsJSON.hal?pricelist=${pricelist}`;
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", url, false );
+            xmlHttp.send(null);
+            const result = JSON.parse(xmlHttp.responseText);
+            return result;
+        }
+        
+        const getCustomerData = () => {
+            const url = `./WebgetCustomerData.hal`;
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", url, false );
+            xmlHttp.send(null);
+            const result = JSON.parse(xmlHttp.responseText);
+            return result;
+        }
+        
+        
+        
+        
+        const mainData = getMainData();
+        const customerData = getCustomerData();
+        
+        tableData = mainData.data;
+        // createHeader(mainData.headerHTML);
+        const itemsByCategoryObj = {};
+        mainData.data.forEach(({ level1, fCode }) => {
+            if (level1) {
+                if (!itemsByCategoryObj[level1]) {
+                    itemsByCategoryObj[level1] = { items: [], sum: 0, name: level1 };
+                }
+                itemsByCategoryObj[level1].items.push(fCode);
+            }
+        });
+        const getItemsByCategory = () => itemsByCategoryObj;
+
+        const getBasket = () => {
+             const url = `./WebgetBasketQT.hal?pricelist=${pricelist}`;
+             const xmlHttp = new XMLHttpRequest();
+             xmlHttp.open( "GET", url, false );
+             xmlHttp.send(null);
+             if (!xmlHttp.responseText) return undefined;
+             return JSON.parse(xmlHttp.responseText);  
+         }
+
+        const bascket = getBasket();
+
+        const sendOrder = (isOk) => {                
+            resultData.ok = isOk || 0;
+            let res = resultData;
+
+            const url = `./WebsendOrderQT.hal`; // ?pricelist=${pricelist}&contact=${contact}
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", url);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            /*
+            console.log('resultData.data :>> ', resultData.data);
+            const filteredArray = resultData.data.filter((el) => {
+                return el.fQuant !== '0' && el.fQuant !== 0;
+                // if (!el.fQuant || el.fQuant !== '0' || el.fQuant != 0) return true
+                // return false
+            });
+            console.log('filteredArray:>> ', filteredArray);
+            res.data = filteredArray;
+            if (!res.data?.length) return;
+            console.log('res :>> ', res);
+            */
+            const resultString = JSON.stringify(res); 
+            xmlhttp.send(resultString);
+
+            xmlhttp.onreadystatechange = () => {
+                const { status } = xmlhttp;
+                if (status !== 200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
+                if (!isOk) return;// добавление в корзицу
+                if (!xmlhttp.responseText) return;
+                const resp = JSON.parse(xmlhttp.responseText);
+                const { message, status: sts } = resp;
+                if (sts==1 && message!=="") {
+                    $('#modal_message').text(message);
+                    $('#modal').modal('show');
+                    // setTimeout(() => window.location.reload(), 2000);
+                } else {
+                    console.error('error = ', resp);
+                    return alert(message);
+                }
+            
+            };
+        };
+        
+                    
+        const createOrderByCategory = (itemsByCategoryObj) => {                
+            const sortedArray = Object.entries(itemsByCategoryObj).sort(([keyA, objA], [keyB, objB]) => {
+              // First, compare by "sum" values
+              if (objA.sum !== objB.sum) {
+                return objB.sum - objA.sum;
+              }
+
+              // If "sum" values are equal, compare by "name" values
+              return objA.name.localeCompare(objB.name);
+            });
+            const sortedObject = Object.fromEntries(sortedArray);
+            
+            
+            
+            /*const mainDiv = document.getElementById('orderByCategory');
+            let divsStr = '';
+            for (let categoryName in sortedObject) {
+                const id = `category_${categoryName.split(' ').join('')}`;
+                const categoryRow = `
+                    <div class="row col-12">
+                        <div class="col-9"> 
+                            ${itemsByCategoryObj[categoryName].name}
+                        </div>
+                        <div class="col-3" id='${id}'>
+                            ${itemsByCategoryObj[categoryName].sum}
+                        </div>
+                    </div>
+                `;
+                divsStr += categoryRow;
+            }
+            mainDiv.innerHTML = divsStr;*/
+        };
+        // functions 
+        calcCategoryDivHeight();
+        const itemsCategory = getItemsByCategory();
+        createOrderByCategory(itemsCategory);
+        addListeners();
+
+        let datatable = new DataTable('#example', {
+            data: tableData,/*,
+            fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull)=>{
+              $('td:eq(2)', nRow).html('<img class="img-wrap" src="' + aData.fImg + '" width="40px">');
+              return nRow;
+            },*/
+            columns: [
+                { data: 'level1' }, // 0
+                { data: 'level2' }, // 1
+                { data: 'level3' }, // 2
+                { data: 'level4' }, //3
+                //{ data: 'fAlternativeCode' }, // 
+                { data: 'fCode' , render: (data, type, row) => `<td class="sorting_3">${row.fCode}</td>` }, // 5}, //
+                { data: 'fName' }, // 5
+                { data: 'fImg', // 6
+                    render: (data, type, row)=> {
+                        if (data) return '<img class="img-wrap" src="' + row.fImg + '" width="40px">' ; 
+                        return '';
+                    }
+                },
+                { data: 'fInstock',
+                    visible: false,
+                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}'> ${data || ''} </div></td>` }, // 7
+                { data: 'fPrice1',
+                    render: (data, type, row) => `<td><div id='price1_${row.fCode}'> ${data} </div></td>` // 8
+                },
+                { data: 'fPrice2',
+                    visible: false,
+                    render: (data, type, row)=> `<td><div id='price2_${row.fCode}'> ${data} </div></td>`  // 9
+                },
+                { data: 'fQuant', // 10
+                    render: (data, type, row, index)=> {
+                        return `<td> 
+                            <input style='max-width: 4rem' 
+                            onchange="sumup(this,'${row.fCode}',${row.fWeight},${row.fVolume})" 
+                            onkeypress="return handleKeyPress(event, this, '${index.row}')"
+                            onfocus="this.select()"
+                            name='${row.fCode}'
+                            data-index='${index.row}'
+                            id='quant_${row.fCode}' value='${data}'>
+                                </td>`
+                    }
+                },
+                { data: 'fSum',// 11
+                    render: (data, type, row)=> {
+                        return `<td class="sorting_3">
+                                    <div style='display:flex'> <div id='sum_${row.fCode}'> ${data || ''} </div></div>
+                                </td>`
+                    }
+                } ,
+                { data: 'fVolume' },
+                { data: 'fWeight' }
+            ],
+            order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc'] ],
+            pageLength: 100,
+            lengthMenu: [100,150,200,250],
+            displayLength: 100,
+            columnDefs:[
+                { sortable: false, targets: [  7, 8, 9, 10, 11 ] },
+                { visible: false, targets: [ 0, 1, 2, 3 ,12, 13 ] }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/uk.json',
+            }
+        });
+        
+        
+        function findIndexByValue(array, value) {
+          for (let i = 0; i < array.length; i++) {
+            if (array[i] === value) {
+              return i; // Return the index when the value is found
+            }
+          }
+          return -1; // Return -1 if the value is not found in the array
+        }
+        
+        function handleKeyPress(event, inputElement, row) {
+          const key = event.key;
+          constarrayindex = $('input[data-index]');
+          
+          const dataIndexArray = constarrayindex.map(function() {
+            return $(this).data('index');
+          }).get();              
+          const currentIndex = findIndexByValue(dataIndexArray,parseInt(inputElement.getAttribute('data-index')));
+          if (key === 'Enter' || (key === 'ArrowDown' && event.keyCode === 40)) {
+            event.preventDefault(); // Prevent the default behavior of Enter key
+            const nextIndex = dataIndexArray[currentIndex + 1];
+            const nextInput = document.querySelector(`[data-index="${nextIndex}"]`);
+            if (nextInput) {
+              nextInput.focus();
+              nextInput.select();
+            }
+          }
+          // You can add similar logic for handling the Arrow Up key (if needed)
+          if ( isNaN( String.fromCharCode(event.keyCode) )) return false;
+        }
+        
+        const setBasketValues = () => {
+           const data = bascket?.data || [];
+           let totalSum = 0;
+           let totalQty = 0;
+           let totalWeight = 0;
+           let totalVolume = 0;
+           resultData.data = [];
+           
+           for (let { code, qty } of data) {
+               if (!qty || qty === '0') continue;
+               const quantEl = datatable.$(`#quant_${code}`)[0];
+               if(quantEl){
+                 quantEl.value = qty;
+                 const [ priceEl ] = datatable.$(`#price1_${code}`);
+                 const price = priceEl.innerText;
+                 const [sumEl] = datatable.$(`#sum_${code}`);
+                 sumEl.innerText = Math.round((price * qty) *roundSum)/roundSum; //  price * qty;
+                 totalSum += Math.round((price * qty) *roundSum)/roundSum;// price * qty;
+                 totalQty += parseFloat(qty);
+                 resultData.data.push({fCode:code,fQuant:qty,fPrice:parseFloat(price),fSum:Math.round((price * qty)*roundSum)/roundSum});
+               }
+           }
+           const initedData = datatable.rows().data().toArray();
+           resultData.totalSum = Math.round(totalSum * roundSum)/roundSum;
+           resultData.totalQty = Math.round(totalQty);
+           //reCalcItemsByCategory();
+           const itemsCategory = getItemsByCategory();
+           createOrderByCategory(itemsCategory);
+           renderTotalArea();
+           document.getElementById('total_sum').innerText = Math.round(resultData.totalSum * roundSum)/roundSum;
+        }
+         
+
+        const addToResultArray = ({ code, qty, price, sum}) => {
+          let totalSum = 0;
+          let totalQty = 0;
+          const finded = resultData.data.find(el => el.fCode === code)
+          if (!finded) {
+              resultData.data.push({ fQuant: qty, fPrice:price, fSum: sum, fCode: code });
+          }
+          resultData.data.forEach((el) => {
+              if (el.fCode === code) {
+                  el.fQuant = qty;
+                  el.fSum = sum;
+              }
+              totalSum = Math.round((totalSum + el.fSum) * roundSum)/roundSum;
+              totalQty += parseFloat(el.fQuant);
+          });
+          resultData.totalSum = totalSum;
+          resultData.totalQty = totalQty;
+          //resultData.totalV += volume
+          //resultData.totalW += weight;
+        };
+
+        const createResultArray = (defaultData) => {
+          return defaultData.map(({ fCode, fQuant, fPrice1 } ) => {
+            //let qty = parseFloat(datatable.$(`#quant_${fCode}`)?.[0].value) || 0;????????
+            let qty = parseFloat(fQuant);
+            if(qty!=0){
+              return {
+                  fCode,
+                  fQuant: qty,
+                  fPrice: fPrice1,
+                  fSum: Math.round((fPrice1 * qty) *roundSum)/roundSum // fPrice1 * qty 
+              };
+            }else{return {}}
+          });
+        };
+
+        let visibleColumn = 10;
+
+        /*const reCalcItemsByCategory = () => {
+            for (let category in itemsCategory) {    
+                itemsCategory[category].sum = 0;
+            }
+            for (let el of resultData.data) { 
+                for (let category in itemsCategory) {
+                    if (itemsCategory[category].items?.includes(el.fCode)) {
+                        itemsCategory[category].sum += el.fSum
+                        categoryid = category.replace(/\s/g,'');
+                        document.getElementById('category_' + categoryid).innerText = Math.round(itemsCategory[category].sum * roundSum)/roundSum; 
+                    }
+                }
+            }
+        };*/
+
+        function sumup(e, code) {
+            const qty = isNaN(parseFloat(e.value)) ? e.value = 0 : parseFloat(e.value) ;
+            const priceEl = document.getElementById(`price1_${code}`);
+            const price = parseFloat(priceEl.innerText);
+
+            const sumEl = document.getElementById(`sum_${code}`);
+            
+            /*const weightEl = document.getElementById(`weight_${code}`);
+            const volumeEl = document.getElementById(`volume_${code}`);*/
+            const sum = Math.round((price * qty) *roundSum)/roundSum;
+            sumEl.innerText = sum;
+          
+            /*let weight =  Math.round((fWeight * qty) *roundValue)/roundValue; 
+            let volume =  Math.round((fVolume * qty) *roundValue)/roundValue;
+            
+            weightEl.innerText = weight;
+            volumeEl.innerText = volume;*/
+            
+            addToResultArray({ code, qty, price, sum});
+            
+            renderTotalArea();
+            document.getElementById('total_sum').innerText =  Math.round((resultData.totalSum) *roundSum)/roundSum; /// fPrice1 * qty ;
+            /*document.getElementById('total_weight').innerText =  Math.round((resultData.totalW) *roundValue)/roundValue; /// fPrice1 * qty ;
+            document.getElementById('total_volume').innerText =  Math.round((resultData.totalV) *roundValue)/roundValue; /// fPrice1 * qty ;*/
+            //reCalcItemsByCategory();
+            const itemsCategory = getItemsByCategory();
+            createOrderByCategory(itemsCategory);
+            sendOrder(0);
+        }
+
+        let filterValues = [[''],[''],[''],['']];
+        let filterValuesSel = [[],[],[],[]];
+
+        function calcFilters(i){
+            filterValuesSel[i] = [];
+            let groupFilters = document.getElementById('select-container' + i);              
+            let filters = groupFilters.getElementsByTagName('select');
+
+            for (index = 0; index < filters.length; ++index) {
+                if(filters[index].value !== ''){
+                    filterValuesSel[i].push(filters[index].value);
+                }
+            }
+        }
+
+        const clearFilters = () => {
+            filterValuesSel = [[],[],[],[]];
+            document.getElementById('select-container0').innerHTML = '';
+            document.getElementById('select-container1').innerHTML = '';
+            document.getElementById('select-container2').innerHTML = '';
+            document.getElementById('select-container3').innerHTML = '';
+            for(i = 0; i <= 3; i++) {
+                addSelect(i, filterValues[i], true);
+            }
+        }
+
+        const querySubtype = (selectValue) => {
+            const subtypesOptions = [''];
+            filterValuesSel[3] = [];
+            document.getElementById('select-container3').innerHTML = '';
+            addSelect(3,filterValues[3], true);
+            $("#select-container3 select").empty();
+
+            if (selectValue !== '') {
+                tableData.forEach(({ level1, level4 }) => {
+                    if (selectValue==level1 && !subtypesOptions.includes(level4)) {
+                        subtypesOptions.push(level4);
+                    }
+                });
+                if (subtypesOptions.length === 1) {
+                    document.getElementById('subtype').style.display = 'none';
+                } else {
+                    document.getElementById('subtype').style.display = 'block';
+                    subtypesOptions.forEach(function(option) {
+                        let optionElement = document.createElement("option");
+                        optionElement.text = option;
+                        $("#select-container3 select")[0].add(optionElement);
+                    });
+                }
+            } else {
+                document.getElementById('subtype').style.display = 'none';
+            }
+        }
+
+        function addSelect(i,filterarray, isMainSelect) {
+            var selectContainer = document.getElementById('select-container' + i);
+            var select = document.createElement("select");
+            select.setAttribute('style', 'max-width: 10rem; min-width:5rem');
+            var deleteIcon = document.createElement("i");
+            deleteIcon.className = "fas fa-times delete-icon pl-1 pr-1";
+            deleteIcon.addEventListener("click", function() {
+                let filters = selectContainer.getElementsByTagName('select');
+                if(filters.length>1){
+                    selectContainer.removeChild(select);
+                    selectContainer.removeChild(deleteIcon);
+                } else {
+                    filters[0].value = '';
+                }
+                if (i === 0 && filters[0].value == '') isShowGroups = false;
+                if (i == 0) {
+                    filterValuesSel[3] = [];
+                    document.getElementById('subtype').style.display = 'none';
+                    document.getElementById('select-container3').innerHTML = '';
+                }
+                calcFilters(i);
+                datatable.draw();
+            });
+
+            selectContainer.appendChild(select);
+            selectContainer.appendChild(deleteIcon);
+
+            let options = [''];
+            if (i==3) {
+                let selectFilterTypeValue = $("#select-container0 select")[0].value;
+                tableData.forEach(({ level1, level4 }) => {
+                    if (selectFilterTypeValue==level1 && !options.includes(level4)) {
+                        options.push(level4);
+                    }
+                });
+                options = options.sort((a, b) => {
+                    const sizeA = parseInt(a);
+                    const sizeB = parseInt(b);
+                    if (!isNaN(sizeA) && !isNaN(sizeB)) return sizeA - sizeB;
+                    return a.localeCompare(b);
+                });
+            } else {
+                options = filterValues[i].sort((a, b) => {
+                    const sizeA = parseInt(a);
+                    const sizeB = parseInt(b);
+                    if (!isNaN(sizeA) && !isNaN(sizeB)) return sizeA - sizeB;
+                    return a.localeCompare(b);
+                });
+            }
+
+             
+
+            options.forEach(function(option) {
+                var optionElement = document.createElement("option");
+                optionElement.text = option;
+                select.add(optionElement);
+            });
+
+            select.addEventListener("change", function() {
+                let filters = selectContainer.getElementsByTagName('select');
+                let allowadd = true;
+                for (index = 0; index < filters.length; ++index) {
+                    if(filters[index].value == '' || i==0){
+                        allowadd = false;
+                        if (i === 0) isShowGroups = false;
+                    }
+                }
+                if (i === 0 && typeof isMainSelect === 'undefined' && allowadd) isShowGroups = true;
+                if (isMainSelect && allowadd) isShowGroups = true;
+                
+                if(allowadd){
+                    addSelect(i,filterarray);
+                }
+
+                if (i==0) {
+                    querySubtype(filters[0].value)
+                }
+
+                calcFilters(i);
+                datatable.draw();
+            });
+        }
+        
+        setBasketValues();
+        
+        function initdatatable(e, settings){
+          
+          
+          
+          const api = new $.fn.dataTable.Api( settings );
+          const { currency,currency2, priceList, priceList2, showBalance, fDiscount, frate } = mainData;
+          const { cucode, cuname, cudebt } = customerData;
+          
+          if(frate){
+            const ratefield = document.querySelector("#ratefield");
+            const ratediv = document.querySelector("#ratediv");
+            ratefield.innerHTML = frate;
+            ratediv.style.display = 'flex';
+          }
+          
+          
+          const curname = document.querySelector("#curname");
+          curname.innerHTML = cuname;
+          
+          const curdebt = document.querySelector("#curdebt");
+          curdebt.innerHTML = cudebt;
+
+          
+          if (showBalance==="true") {
+            api.column(7).visible(true);
+            }
+          
+          let innertxt = priceList;
+          if(currency && currency!==''){
+            innertxt = innertxt + ', ' + currency;
+          }
+          
+          let innertxt2 = priceList2;
+          if(currency2 && currency2!==''){
+            innertxt2 = innertxt2 + ', ' + currency2;
+          }
+          
+          if (!!priceList2) {
+              api.column(9).visible(true);
+              api.column(9).header().innerText = innertxt2;
+              api.column(9).footer().innerText = innertxt2;
+          } 
+          
+          api.column(8).header().innerText = innertxt;
+          api.column(8).footer().innerText = innertxt;
+
+          for(let i=0;i<=3;i++){//  changed 3 to 2 (only 2 filters!)
+              $.fn.dataTable.ext.search.push((settings, searchData, index, rowData, counter)=>{
+
+                  if(filterValuesSel[i].length==0){
+                      return true;
+                  } else {
+                      if (filterValuesSel[i].indexOf(searchData[i]) !== -1) {
+                          return true;
+                      }
+                      return false;
+                  }
+              });
+          }
+       
+          $.fn.dataTable.ext.search.push((settings, searchData, index, rowData, counter)=>{
+              if(orderedFiltersInput.checked){
+                  let item = orderedData.find((data) => data.name===searchData[4]);
+                  if(item){
+                    if(item.value){
+                        if(parseFloat(item.value)!=0){
+                            return true;
+                        }
+                    }
+                  }
+                  return false;                        
+              }
+              return true;
+          });
+          let orderedFiltersInput = document.getElementById('orderedFilterInput');
+
+
+          var orderedData = []
+          orderedFiltersInput.onchange = ()=>{
+              clearFilters();
+              orderedData = datatable.$('input').serializeArray();
+              datatable.draw();
+          };
+
+          api.column(0).data().unique().sort().each((data)=>{
+              if(data!=='')
+              {filterValues[0].push(data);}
+          })
+          api.column(1).data().unique().sort().each((data)=>{
+              if(data!=='')
+              {filterValues[1].push(data);}
+          })
+          api.column(2).data().unique().sort().each((data)=>{
+              if(data!=='')
+              {filterValues[2].push(data);}
+          })
+          api.column(3).data().unique().sort().each((data)=>{
+              if(data!=='')
+              {filterValues[3].push(data);}
+          })
+
+          for(i=0;i<=3;i++){
+              addSelect(i,filterValues[i], true);
+          }
+          const filter = document.getElementById('example_filter');
+          filter.firstChild.firstElementChild.style.marginLeft = '1rem';
+        }
+        
+        
+        datatable.on('init',(e, settings)=>{
+            initdatatable(e, settings);
+            $(".dataTables_paginate").bind( "click", '.paginate_button', function(e) {
+                if (e.target?.classList.contains('disabled')) return;
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            });
+        });
+        
+        datatable.on('draw',(e, settings)=>{
+            let groupColumn = 0;
+            let groupColumn2 = 1;
+            let groupColumn3 = 2;
+            var api = new $.fn.dataTable.Api( settings );
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+            
+            if (isShowGroups) {
+                api.column(groupColumn, { page: 'current' })
+                    .data()
+                    .each(function (group, i) {
+                        if (last !== group) {
+                            $(rows)
+                                .eq(i)
+                                .before(
+                                    '<tr class="group1"><td colspan="' + visibleColumn + '">' +
+                                        group +
+                                        '</td></tr>'
+                                );
+
+                            last = group;
+                        }
+                    }
+                );
+                // last = null;
+                // api.column(groupColumn2, { page: 'current' })
+                //     .data()
+                //     .each(function (group, i) {
+                //         if (last !== group) {
+                //             $(rows)
+                //                 .eq(i)
+                //                 .before(
+                //                     '<tr class="group2"><td colspan="1"/><td colspan="' + parseInt(visibleColumn-1) + '">' +
+                //                         group +
+                //                         '</td></tr>'
+                //                 );
+
+                //             last = group;
+                //         }
+                //     });
+                // last = null;
+                // api.column(groupColumn3, { page: 'current' })
+                //     .data()
+                //     .each(function (group, i) {
+                //         if (last !== group) {
+                //             $(rows)
+                //                 .eq(i)
+                //                 .before(
+                //                     '<tr class="group3"><td colspan="2"/><td colspan="' + parseInt(visibleColumn-2) + '">' +
+                //                         group +
+                //                         '</td></tr>'
+                //                 );
+
+                //             last = group;
+                //         }
+                //     });
+                $('#example tbody').on('click', 'tr.group', function () {
+                    var currentOrder = datatable.order()[0];
+                    if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                        datatable.order([groupColumn, 'desc']).draw();
+                    }
+                    else {
+                        datatable.order([groupColumn, 'asc']).draw();
+                    }
+                });
+            }
+        });  
+        
+        
+        function addRowToModalConfirm(){
+          let total_sum = parseFloat(document.querySelector('#total_sum').innerText);
+          if(total_sum===0){
+            return;
+          }
+          $('#confirmOrderModal').modal('show');
+          //data-toggle="modal" data-target="#confirmOrderModal"
+       
+          let tableBody = document.querySelector("#tbodyIDforConfirm");
+          let confirmTotal = document.querySelector("#confirmTotal");
+          let confirmTotalW = document.querySelector("#confirmTotalW");
+          let confirmTotalV = document.querySelector("#confirmTotalV");
+          tableBody.innerHTML = '';
+          confirmTotal.innerHTML = resultData.totalSum;
+
+          /*confirmTotalW.innerHTML = document.getElementById('total_weight').innerText;
+          confirmTotalV.innerHTML = document.getElementById('total_volume').innerText;*/
+          resultData.data.forEach((row)=>{
+            var newRow = document.createElement("tr");
+            const initedData = datatable.rows().data().toArray() || [];
+            const [item] = initedData.filter((el) => el.fCode === row.fCode);
+
+            newRow.innerHTML = `
+              <td>${row.fCode}</td>
+              <td>${item.fName}</td>
+              <td style="text-align: right">${row.fPrice}</td>
+              <td style="text-align: right">${row.fQuant}</td>
+              <td style="text-align: right">${row.fSum} </td>
+            `;
+            tableBody.appendChild(newRow);
+          });
+          
+        }
+    
+      document.getElementById('toggleFilterArrow').addEventListener('click', function () {
+          var button = this;
+          var icon = button.querySelector('i');
+          var span = button.nextElementSibling;
+          var filters = document.getElementById('filters');
+          var mainContent = document.getElementById('main-content');
+
+          if (icon.classList.contains('bi-caret-left-fill')) {
+              icon.classList.replace('bi-caret-left-fill', 'bi-caret-right-fill');
+              span.textContent = 'Розгорнути фільтри';
+              filters.classList.add('d-none');
+              mainContent.classList.remove('col-10');
+              mainContent.classList.add('col-12');
+          } else {
+              icon.classList.replace('bi-caret-right-fill', 'bi-caret-left-fill');
+              span.textContent = 'Згорнути фільтри';
+              filters.classList.remove('d-none');
+              mainContent.classList.remove('col-12');
+              mainContent.classList.add('col-10');
+          }
+      });
+      document.getElementById('toggleShapkaArrow').addEventListener('click', function () {
+          var button = this;
+          var icon = button.querySelector('i');
+          var span = button.previousElementSibling;
+          var shapka = document.getElementById('shapka');
+          if (icon.classList.contains('bi-caret-up-fill')) {
+              icon.classList.replace('bi-caret-up-fill', 'bi-caret-down-fill');
+              span.textContent = 'Розгорнути шапку';
+              shapka.style.display = 'none';
+          } else {
+              icon.classList.replace('bi-caret-down-fill', 'bi-caret-up-fill');
+              span.textContent = 'Згорнути шапку';
+              shapka.style.display = 'flex';
+          }
+      });
+      
+      function renderTotalArea(){
+        const mainDiv = document.getElementById('orderByQty');
+        let divsStr = '';
+        let totsumrow = Math.round((resultData.totalSum) * roundSum)/roundSum;
+        let totqtyrow = Math.round(resultData.totalQty);
+
+        let categoryRow = `
+            <div class="row col-12">
+                <div class="col-9"> 
+                    Сума замовленого
+                </div>
+                <div class="col-3" id='totalSum'>
+                    ${totsumrow}
+                </div>
+            </div>
+        `;
+        divsStr += categoryRow;
+        categoryRow = `
+            <div class="row col-12">
+                <div class="col-9"> 
+                    Кількість замовленого
+                </div>
+                <div class="col-3" id='totalQty'>
+                    ${totqtyrow}
+                </div>
+            </div>
+        `;
+        divsStr += categoryRow;
+        mainDiv.innerHTML = divsStr;
+      }
+    
+    
+    </script>
+</body>
+</html>
