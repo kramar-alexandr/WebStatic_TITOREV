@@ -265,8 +265,8 @@
         <div class="modal" tabindex="-1" role="dialog" id="modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"><h5 class="modal-title text-center">Інформація</h5></div>
-                    <div class="modal-body"><p id="modal_message">Замовлення відправлене</p></div>
+                    <div class="modal-header"><h5 class="modal-title text-center">Информация</h5></div>
+                    <div class="modal-body"><p id="modal_message">Заказ отправлен</p></div>
                     <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" id="done">OK</button></div>
                 </div>
             </div>
@@ -276,21 +276,21 @@
   <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
       <div class="gap-2 d-flex align-items-center">
           <button id="toggleFilterArrow" class="circle-btn"><i class="bi bi-caret-left-fill"></i></button>
-          <span>Згорнути фільтри</span>
+          <span>Свернуть</span>
       </div>
       <div class="d-flex align-items-center justify-content-between gap-3">
           <div class="sum" style="font-weight: bolder;">
-              <div class="d-flex align-items-center px-3"><span>Сума замовлення:</span></div>
+              <div class="d-flex align-items-center px-3"><span>Сумма заказа:</span></div>
               <div class="bg-lightgreen px-3 d-flex align-items-center">
                   <span id="total_sum">0</span>
               </div>
           </div>
           <div>
-              <button class="btn_submit" onclick="addRowToModalConfirm()">Надіслати замовлення</button>
+              <button class="btn_submit" onclick="addRowToModalConfirm()">Отправить заказ</button>
           </div>
       </div>
       <div class="gap-2 w-25 d-flex justify-content-end align-items-center">
-          <span>Згорнути шапку</span>
+          <span>Свернуть</span>
           <button id="toggleShapkaArrow" class="circle-btn"><i class="bi bi-caret-up-fill"></i></button>
       </div>
   </div>
@@ -302,7 +302,7 @@
                 <div id="filters" class="filters">
                     <p class="mb-0 mb-1 h4">
                         <i class="fas fa-filter"></i>
-                        <strong class="text-primary">Фільтри</strong>
+                        <strong class="text-primary">Фильтры</strong>
                     </p>
                     <div class="row">
                         <div class="col">
@@ -320,14 +320,14 @@
 <!--style="display: none;"-->
                     <div class="row" id="subtype" style="display: none;">
                         <div class="col">
-                            Підтип
+                            Подтип
                             <div id="select-container3"></div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col">
-                            Об'єм
+                            Объем
                             <div id="select-container2"></div>
                         </div>
                     </div>
@@ -339,21 +339,18 @@
                                 <label class="form-check-label" for="orderedFilterInput">
                                     <input id="orderedFilterInput" class="form-check-input" type="checkbox"
                                         name="OnlyOrdered" value="OnlyOrdered">
-                                    Тількі замовлене.
+                                    Только заказанное.
                                 </label>
                             </div>
 
                         </div>
                     </div>
-                    <!--<div class="text-center pt-1 text-primary">
-                        <span>Скинути фільтри</span>
-                    </div>-->
                 </div>
                 
                 <div id="filters" class="filters mt-3">
                     <p class="mb-0 mb-1 h5">
                         <i class="fas fa-clipboard"></i>
-                        <strong class="text-primary">Замовлення</strong>
+                        <strong class="text-primary">Заказ</strong>
                     </p>
                     <p class="mb-1 mt-2">
                         <strong class="mt-1"></strong>
@@ -365,34 +362,23 @@
                 <div class="filters mt-3">
                     <p class="mb-0 mb-1 h5">
                         <i class="fas fa-external-link-alt"></i>
-                        <strong class="text-primary">Посилання</strong>
+                        <strong class="text-primary">Ссылки</strong>
                     </p>
-                    <p style="margin-bottom: 0;"><a href="https://s.erpjs.biz:1302/PartnerPrices.xlsx" target="_blank">Посилання на прайс Partner</a></p>
-                    <p style="margin-bottom: 0;"><a href="https://drive.google.com/drive/folders/1jBO4xJboYcl07USkAjzHYbxxvimKYk_Y" target="_blank">Посилання на фото товару</a></p>
-                    <p style="margin-bottom: 0;"><a href="https://hitmarket.ua/media/feed/Opt_price_1_jksdnvjdfj.yml" target="_blank">Посилання на прайс у YML</a></p>
+                    <p style="margin-bottom: 0;"><a href="https://s.erpjs.biz:1302/PartnerPrices.xlsx" target="_blank">Ссылка на прайс Partner</a></p>
+                    <p style="margin-bottom: 0;"><a href="https://drive.google.com/drive/folders/1jBO4xJboYcl07USkAjzHYbxxvimKYk_Y" target="_blank">Ссылка на фото товара</a></p>
+                    <p style="margin-bottom: 0;"><a href="https://hitmarket.ua/media/feed/Opt_price_1_jksdnvjdfj.yml" target="_blank">Ссылка на прайс YML</a></p>
                 </div>
-                <!--<div id="filters" class="filters mt-3">
-                    <p class="mb-0 mb-1 h5">
-                        <i class="fas fa-clipboard"></i>
-                        <strong class="text-primary">Замовленно по категоріям</strong>
-                    </p>
-                    <p class="mb-1 mt-2">
-                        <strong class="mt-1"></strong>
-                    </p>
-                    <div id="orderByCategory" style="overflow-x: hidden; overflow-y: auto">
-                    </div>
-                </div>-->
             </header>
         </div>
         <div class="col-10" id="main-content">
             <div class="shapka justify-content-between mb-4" id="shapka">
                 <div class="d-flex flex-column w-50">
-                    <h3>КОМЕРЦІЙНА ПРОПОЗИЦІЯ</h3>
-                    <div>Кліент: <span class="client" id="curname"></span></div>
+                    <h3> КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ</h3>
+                    <div>Клиент: <span class="client" id="curname"></span></div>
                     <div>Баланс: <span class="balance" id="curdebt"></span></div>
                     <div class="balance" id="ratediv" style="display:none;">Курс: <span id="ratefield"></span></div>
                     <div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#passwordModal" onclick="">Змінити пароль</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#passwordModal" onclick="">Сменить пароль</button>
                     </div>
                 </div>
                 <div class="w-50 d-flex flex-column justify-content-end align-items-end text-right">
@@ -402,27 +388,6 @@
                     <a href="tel:+380964749409">+38 (096) 474 94 09</a>
                 </div>
             </div>
-            <!-- <div class="d-flex  mt-3 mb-3">
-                <div class="col-8 d-flex justify-content-start px-0 ">
-                     <button id="sendOrderBtn" style="visibility: hidden" type="button" class="btn btn-primary">Send order</button>
-                    <button type="button" class="btn btn-primary btn-lg w-100 mr-5"
-                        onclick="addRowToModalConfirm()">Замовити</button>
-
-                    <button type="button" class="btn btn-danger btn-lg w-100" data-toggle="modal"
-                        data-target="#cancelOrderModal">Очистити</button>
-                </div>
-                <div class="px-0 col-4 text-end" style="font-weight: bolder;">
-                    <div class="d-flex justify-content-end">Сума замовлення:&nbsp;<div id="total_sum"
-                            class="text-success pr-1"> 0 </div> $</div>
-                    <div class="d-flex justify-content-end"> 
-                            <div id="total_weight" class="text-primary pr-1"> 0 </div>Kg 
-                            &nbsp;<div id="total_volume" class="text-danger pr-1"> 0 </div>m³
-                        </div>
-
-
-                </div>
-
-            </div> -->
 
             <table id="example" class="display" style="width:100%">
                 <thead>
@@ -432,15 +397,15 @@
                         <th>level3</th>
                         <th>level4</th>
                         <th>Код</th>
-                        <th>Назва</th>
-                        <th>Зображення</th>
-                        <th>Залишок</th>
-                        <th>Ціна1</th>
-                        <th>Ціна2</th>
-                        <th>Замовлено</th>
-                        <th>Сума</th>
-                        <th>Об'єм</th>
-                        <th>Вага</th>
+                        <th>Название</th>
+                        <th>Изображение</th>
+                        <th>Остаток</th>
+                        <th>Цена1</th>
+                        <th>Цена2</th>
+                        <th>Заказано</th>
+                        <th>Сумма</th>
+                        <th>Объем</th>
+                        <th>Вес</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -450,15 +415,15 @@
                         <th>level3</th>
                         <th>level4</th>
                         <th>Код</th>
-                        <th>Назва</th>
-                        <th>Зображення</th>
-                        <th>Залишок</th>
-                        <th>Ціна1</th>
-                        <th>Ціна2</th>
-                        <th>Замовлено</th>
-                        <th>Сума</th>
-                        <th>Об'єм</th>
-                        <th>Вага</th>
+                        <th>Название</th>
+                        <th>Изображение</th>
+                        <th>Остаток</th>
+                        <th>Цена1</th>
+                        <th>Цена2</th>
+                        <th>Заказано</th>
+                        <th>Сумма</th>
+                        <th>Объем</th>
+                        <th>Вес</th>
                     </tr>
                 </tfoot>
 
@@ -476,10 +441,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center">Інформація</h5>
+                <h5 class="modal-title text-center">Информация</h5>
             </div>
             <div class="modal-body">
-                <p id="modal_message">Замовлення відправлене</p>
+                <p id="modal_message">Заказ отправлен</p>
             </div>
             <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal"
                     aria-label="Close" id="done">OK</button></div>
@@ -490,26 +455,26 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="passwordModalLabel">Змінити пароль</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Закрити">
+                <h5 class="modal-title" id="passwordModalLabel">Сменить пароль</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="newPassword">Новий пароль</label>
-                        <input type="password" class="form-control" id="newPassword" placeholder="Введіть новий пароль">
+                        <label for="newPassword">Новый пароль</label>
+                        <input type="password" class="form-control" id="newPassword" placeholder="Введите новый пароль">
                     </div>
                     <div class="form-group">
-                        <label for="confirmPassword">Повторити пароль</label>
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="Повторіть новий пароль">
+                        <label for="confirmPassword">Повторите пароль</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Повторите новый пароль">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                <button id="changePasswordConfirm" type="button" class="btn btn-primary" disabled>Зберегти пароль</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button id="changePasswordConfirm" type="button" class="btn btn-primary" disabled>Сохранить пароль</button>
             </div>
         </div>
     </div>
@@ -518,7 +483,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="max-height: calc(100vh - 80px); overflow:hidden;">
             <div class="modal-header">
-                <h5 class="modal-title text-primary">Форма відправки замовлення</h5>
+                <h5 class="modal-title text-primary">Форма отправки заказа</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -528,10 +493,10 @@
                     <thead>
                         <tr>
                             <th>Код</th>
-                            <th>Назва</th>
-                            <th>Ціна</th>
-                            <th>Кількість</th>
-                            <th>Сума</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Кол-во</th>
+                            <th>Сумма</th>
                         </tr>
                     </thead>
                     <tbody id="tbodyIDforConfirm">
@@ -544,18 +509,18 @@
                     <div class="form-check" style="font-size: x-large;">
                         <input type="checkbox" id="isSurender" style="width: 1.25rem; height: 1.25rem; margin-top: 7px;" class="form-check-input" />
                         <label class="form-check-label text-danger" style="padding-left: 1rem; padding-bottom: 1rem;" for="exampleCheck1">
-                            Замовлення підтверджую!
+                            Заказ подтверждаю!
                         </label>
                     </div>    
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center ">
                     <div class="d-flex justify-content-start align-items-center ">
-                        <button id="sendOrderBtn" type="button" style="min-width: 100px;" class="btn btn-primary">Надіслати</button>
-                        <button type="button" class="btn btn-secondary" style="min-width: 100px; margin-left: 10px;" data-dismiss="modal">Відміна</button>    
+                        <button id="sendOrderBtn" type="button" style="min-width: 100px;" class="btn btn-primary">Отправить</button>
+                        <button type="button" class="btn btn-secondary" style="min-width: 100px; margin-left: 10px;" data-dismiss="modal">Отмена</button>    
                     </div>
                     <div class="d-flex justify-content-end " style="text-decoration: underline; font-size: x-large;">
-                        Всього:&nbsp;
+                        Всего:&nbsp;
                         <div id="confirmTotal" class="text-success pr-1"> 0 </div>
                     </div>
                 </div>
@@ -568,14 +533,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Дійсно очистити замовлення?</h5>
+                <h5 class="modal-title">Очистить заказ?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-footer">
-                <button id="cancelOrderBtn" type="button" class="btn btn-danger">Очистити</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+                <button id="cancelOrderBtn" type="button" class="btn btn-danger">Очистить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
             </div>
         </div>
     </div>
@@ -770,7 +735,7 @@
 
             xmlhttp.onreadystatechange = () => {
                 const { status } = xmlhttp;
-                if (status !== 200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
+                if (status !== 200) return alert('Что-то не так. Свяжитесь с администратором!'); 
                 if (!isOk) return;// добавление в корзицу
                 if (!xmlhttp.responseText) return;
                 const resp = JSON.parse(xmlhttp.responseText);
@@ -1408,13 +1373,13 @@
 
           if (icon.classList.contains('bi-caret-left-fill')) {
               icon.classList.replace('bi-caret-left-fill', 'bi-caret-right-fill');
-              span.textContent = 'Розгорнути фільтри';
+              span.textContent = 'Развернуть';
               filters.classList.add('d-none');
               mainContent.classList.remove('col-10');
               mainContent.classList.add('col-12');
           } else {
               icon.classList.replace('bi-caret-right-fill', 'bi-caret-left-fill');
-              span.textContent = 'Згорнути фільтри';
+              span.textContent = 'Свернуть';
               filters.classList.remove('d-none');
               mainContent.classList.remove('col-12');
               mainContent.classList.add('col-10');
@@ -1427,11 +1392,11 @@
           var shapka = document.getElementById('shapka');
           if (icon.classList.contains('bi-caret-up-fill')) {
               icon.classList.replace('bi-caret-up-fill', 'bi-caret-down-fill');
-              span.textContent = 'Розгорнути шапку';
+              span.textContent = 'Развернуть';
               shapka.style.display = 'none';
           } else {
               icon.classList.replace('bi-caret-down-fill', 'bi-caret-up-fill');
-              span.textContent = 'Згорнути шапку';
+              span.textContent = 'Свернуть';
               shapka.style.display = 'flex';
           }
       });
@@ -1445,7 +1410,7 @@
         let categoryRow = `
             <div class="row col-12">
                 <div class="col-9"> 
-                    Сума замовленого
+                    Сумма заказанного
                 </div>
                 <div class="col-3" id='totalSum'>
                     ${totsumrow}
@@ -1456,7 +1421,7 @@
         categoryRow = `
             <div class="row col-12">
                 <div class="col-9"> 
-                    Кількість замовленого
+                    Кол-во заказанного
                 </div>
                 <div class="col-3" id='totalQty'>
                     ${totqtyrow}
