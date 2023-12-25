@@ -663,7 +663,7 @@
                 pricelist = getCookie('pricelist');
               }
             }
-            const url = `./WebgetItemsJSON.hal?pricelist=${pricelist}`;
+            const url = `./WebgetItemsJSON.hal`;
             const xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", url, false );
             xmlHttp.send(null);
