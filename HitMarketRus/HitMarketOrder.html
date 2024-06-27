@@ -704,10 +704,15 @@
              xmlHttp.open( "GET", url, false );
              xmlHttp.send(null);
              if (!xmlHttp.responseText) return undefined;
+             if(xmlHttp.responseText=="notloged"){
+                location.reload(); 
+                return undefined;
+              }
              return JSON.parse(xmlHttp.responseText);  
          }
 
         const bascket = getBasket();
+        setInterval(getBasket,30000);
 
         const sendOrder = (isOk) => {                
             resultData.ok = isOk || 0;
