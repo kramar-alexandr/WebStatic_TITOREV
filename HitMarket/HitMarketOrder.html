@@ -258,7 +258,37 @@
             }
             .gap-3{
                 gap: 30px;;
-            }        
+            }
+            
+            #sendOrderBtn {
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                position: relative;
+            }
+
+            #sendOrderBtn.loading::after {
+                content: "";
+                width: 20px;
+                height: 20px;
+                border: 3px solid #fff;
+                border-top: 3px solid #333;
+                border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: translateY(-50%) rotate(0deg);
+                }
+                100% {
+                    transform: translateY(-50%) rotate(360deg);
+                }
+            }
         </style>
     </head>
     <body>
@@ -621,8 +651,16 @@
             sendBtn.addEventListener('click', (e) => {
                 const isSurender = document.getElementById('isSurender').checked;
                 if (!isSurender) return;
-                $('#confirmOrderModal').modal('hide');
+
+                sendBtn.classList.add('loading');
+                sendBtn.disabled = true;
+
                 sendOrder(1);
+
+                sendBtn.classList.remove('loading');
+                sendBtn.disabled = false;
+
+                $('#confirmOrderModal').modal('hide');
             });
             cancelBtn.addEventListener('click', (e) => {
                 $('#cancelOrderModal').modal('hide');
