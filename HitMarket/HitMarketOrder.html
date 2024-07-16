@@ -658,12 +658,6 @@
                 sendBtn.disabled = true;
 
                 sendOrder(1);
-
-                console.log('test :>> ', '2');
-                sendBtn.classList.remove('loading');
-                sendBtn.disabled = false;
-
-                $('#confirmOrderModal').modal('hide');
             });
             cancelBtn.addEventListener('click', (e) => {
                 $('#cancelOrderModal').modal('hide');
@@ -824,6 +818,14 @@
                 if (sts==1 && message!=="") {
                     $('#modal_message').text(message);
                     $('#modal').modal('show');
+
+                    const sendBtn = document.getElementById('sendOrderBtn');
+                    
+                    console.log('test :>> ', '2');
+
+                    sendBtn.classList.remove('loading');
+                    sendBtn.disabled = false;
+                    $('#confirmOrderModal').modal('hide');
                     // setTimeout(() => window.location.reload(), 2000);
                 } else {
                     console.error('error = ', resp);
