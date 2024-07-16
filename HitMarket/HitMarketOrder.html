@@ -652,11 +652,14 @@
                 const isSurender = document.getElementById('isSurender').checked;
                 if (!isSurender) return;
 
+                console.log('test :>> ', '1');
+
                 sendBtn.classList.add('loading');
                 sendBtn.disabled = true;
 
                 sendOrder(1);
 
+                console.log('test :>> ', '2');
                 sendBtn.classList.remove('loading');
                 sendBtn.disabled = false;
 
