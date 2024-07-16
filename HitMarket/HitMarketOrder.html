@@ -276,7 +276,7 @@
                 border-radius: 50%;
                 position: absolute;
                 top: 50%;
-                right: 10px;
+                right: 45px;
                 transform: translateY(-50%);
                 animation: spin 1s linear infinite;
             }
@@ -652,8 +652,6 @@
                 const isSurender = document.getElementById('isSurender').checked;
                 if (!isSurender) return;
 
-                console.log('test :>> ', '1');
-
                 sendBtn.classList.add('loading');
                 sendBtn.disabled = true;
 
@@ -820,8 +818,6 @@
                     $('#modal').modal('show');
 
                     const sendBtn = document.getElementById('sendOrderBtn');
-                    
-                    console.log('test :>> ', '2');
 
                     sendBtn.classList.remove('loading');
                     sendBtn.disabled = false;
