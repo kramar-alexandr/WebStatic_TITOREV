@@ -773,7 +773,7 @@
             xmlhttp.send(resultString);
 
             const timeoutId = setTimeout(() => {
-                alert('⚠️ Сервер не отвечает. Пожалуйста, попробуйте позже.');
+                alert('⚠️ Сервер не отвечает. Пожалуйста, попробуйте позже.\n\nПопробуйте перезагрузить страницу.');
 
                 sendBtn.classList.remove('loading');
                 sendBtn.disabled = false;
