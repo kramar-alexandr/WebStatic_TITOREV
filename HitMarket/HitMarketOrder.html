@@ -647,6 +647,8 @@
             divElementQty.style.maxHeight = (5*16 + distanceToViewportBottom1) + 'px';
         };
 
+        let timeToServerError = 60000;
+
         const addListeners = () => {
             sendBtn.addEventListener('click', (e) => {
                 const isSurender = document.getElementById('isSurender').checked;
@@ -655,7 +657,25 @@
                 sendBtn.classList.add('loading');
                 sendBtn.disabled = true;
 
-                sendOrder(1);
+                const timeout = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('Сервер не відповідає. Будь ласка, спробуйте пізніше.')), timeToServerError)
+                );
+
+                const sendOrderPromise = new Promise((resolve) => {
+                    sendOrder(1);
+                    resolve();
+                });
+            
+                Promise.race([sendOrderPromise, timeout])
+                    .then(() => {
+                        sendBtn.classList.remove('loading');
+                        sendBtn.disabled = false;
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                        sendBtn.classList.remove('loading');
+                        sendBtn.disabled = false;
+                    });
             });
             cancelBtn.addEventListener('click', (e) => {
                 $('#cancelOrderModal').modal('hide');
