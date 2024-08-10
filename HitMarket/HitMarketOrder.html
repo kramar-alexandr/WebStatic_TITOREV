@@ -809,12 +809,17 @@
             xmlhttp.send(resultString);
 
             const timeoutId = setTimeout(() => {
-                alert('Сервер не відповідає. Будь ласка, спробуйте пізніше.');
+                alert('⚠️ Сервер не відповідає. Будь ласка, спробуйте пізніше.');
+
+                sendBtn.classList.remove('loading');
+                sendBtn.disabled = false;
+                $('#confirmOrderModal').modal('hide');
+
                 xmlhttp.abort(); // Прериваємо запит, якщо він триває занадто довго
             }, timeToServerError); // 20 секунд
 
             xmlhttp.onreadystatechange = () => {
-                
+
                 if (xmlhttp.readyState !== 4) return; // Чекаємо, поки запит не буде завершений
                 clearTimeout(timeoutId); // Якщо запит завершився, скасовуємо таймер
 

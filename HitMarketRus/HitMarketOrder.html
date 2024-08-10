@@ -747,6 +747,8 @@
         const bascket = getBasket();
         setInterval(getBasket,30000);
 
+        let timeToServerError = 20000;
+
         const sendOrder = (isOk) => {                
             resultData.ok = isOk || 0;
             let res = resultData;
@@ -770,7 +772,21 @@
             const resultString = JSON.stringify(res); 
             xmlhttp.send(resultString);
 
+            const timeoutId = setTimeout(() => {
+                alert('⚠️ Сервер не отвечает. Пожалуйста, попробуйте позже.');
+
+                sendBtn.classList.remove('loading');
+                sendBtn.disabled = false;
+                $('#confirmOrderModal').modal('hide');
+
+                xmlhttp.abort(); // Прериваємо запит, якщо він триває занадто довго
+            }, timeToServerError); // 20 секунд
+
             xmlhttp.onreadystatechange = () => {
+
+                if (xmlhttp.readyState !== 4) return; // Чекаємо, поки запит не буде завершений
+                clearTimeout(timeoutId); // Якщо запит завершився, скасовуємо таймер
+
                 const { status } = xmlhttp;
                 if (status !== 200) return alert('Что-то не так. Свяжитесь с администратором!'); 
                 if (!isOk) return;// добавление в корзицу
