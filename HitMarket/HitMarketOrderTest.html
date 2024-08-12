@@ -850,18 +850,6 @@
             
             };
         };
-        
-        const checkInStockColor = (row) => {
-
-            if(!isExcessInStock) {
-                if(parseInt(row.fInstock, 10) < parseInt(row.fQuant, 10))
-                isExcessInStock = true;
-            }
-
-            console.log(parseInt(row.fInstock, 10), parseInt(row.fQuant, 10));
-
-            return parseInt(row.fInstock, 10) < parseInt(row.fQuant, 10) ? 'red' : 'black';
-        };
                     
         const createOrderByCategory = (itemsByCategoryObj) => {                
             const sortedArray = Object.entries(itemsByCategoryObj).sort(([keyA, objA], [keyB, objB]) => {
@@ -923,7 +911,7 @@
                 },
                 { data: 'fInstock',
                     visible: false,
-                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}' style='color: ${checkInStockColor(row)}'>${data}</div></td>` }, // 7
+                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}'>${data}</div></td>` }, // 7
                 { data: 'fPrice1',
                     render: (data, type, row) => `<td><div id='price1_${row.fCode}'> ${data} </div></td>` // 8
                 },
@@ -934,7 +922,7 @@
                 { data: 'fQuant', // 10
                     render: (data, type, row, index)=> {
                         return `<td> 
-                            <input style='max-width: 4rem; color: ${checkInStockColor(row)}' 
+                            <input style='max-width: 4rem;' 
                             onchange="sumup(this,'${row.fCode}',${row.fWeight},${row.fVolume})" 
                             onkeypress="return handleKeyPress(event, this, '${index.row}')"
                             onfocus="this.select()"
@@ -1007,8 +995,18 @@
            resultData.data = [];
            
            for (let { code, qty } of data) {
+
                if (!qty || qty === '0') continue;
                const quantEl = datatable.$(`#quant_${code}`)[0];
+               quantEl.style.color = 'black';
+
+               const item = tableData.find((el) => el.fCode === code);
+
+               if(parseInt(item?.fInstock) < parseInt(qty, 10)){
+                 isExcessInStock = true;
+                 quantEl.style.color = 'red';
+               }
+              
                if(quantEl){
                  quantEl.value = qty;
                  const [ priceEl ] = datatable.$(`#price1_${code}`);
