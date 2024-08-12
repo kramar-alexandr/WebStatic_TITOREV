@@ -660,19 +660,26 @@
                 sendBtn.disabled = true;
 
                 const priceList = getMainData();
+
                 resultData.data.forEach((el) => {
 
                     const item = priceList.data.find((item) => item.fCode === el.fCode);
 
                     console.log('parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10) :>> ', parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10));
-                    
+
                     if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10) || true) {
 
+                        isExcessInStock = true;
                         alert(`На складі недостатньо товару ${item.fName}!`);
+                        sendBtn.classList.remove('loading');
+                        sendBtn.disabled = false;
+                        $('#confirmOrderModal').modal('hide');
                         window.location.reload();
                         return;
                     }
                 });
+
+                if(isExcessInStock) return;
 
                 sendOrder(1);
             });
