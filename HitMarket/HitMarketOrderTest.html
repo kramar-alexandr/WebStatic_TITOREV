@@ -615,6 +615,7 @@
 
         console.log('Test :>> ', "Вивід тестового повідомлення");
 
+        let isExcessInStock = false;
         let isShowGroups = false;
         const roundValue = 10000;
         const roundSum = 100;
@@ -911,7 +912,7 @@
                 },
                 { data: 'fInstock',
                     visible: false,
-                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}'> ${data || ''} </div></td>` }, // 7
+                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}' style='color: ${data < row.fQuant ? 'red' : 'black'}'> ${data || ''} </div></td>` }, // 7
                 { data: 'fPrice1',
                     render: (data, type, row) => `<td><div id='price1_${row.fCode}'> ${data} </div></td>` // 8
                 },
@@ -922,7 +923,7 @@
                 { data: 'fQuant', // 10
                     render: (data, type, row, index)=> {
                         return `<td> 
-                            <input style='max-width: 4rem' 
+                            <input style='max-width: 4rem; color: ${row.fInstock < data ? 'red' : 'black'}' 
                             onchange="sumup(this,'${row.fCode}',${row.fWeight},${row.fVolume})" 
                             onkeypress="return handleKeyPress(event, this, '${index.row}')"
                             onfocus="this.select()"
@@ -1074,6 +1075,22 @@
 
         function sumup(e, code) {
             const qty = isNaN(parseFloat(e.value)) ? e.value = 0 : parseFloat(e.value) ;
+
+            const item = tableData.find((el) => el.fCode === code);
+
+            e.style.color = 'black';
+            document.getElementById(`inStock_${code}`).style.color = 'black';
+
+            if (!item) {
+
+                isExcessInStock = true;
+                e.style.color = 'red';
+                document.getElementById(`inStock_${code}`).style.color = 'red';
+                return;
+            }
+
+            isExcessInStock = false;
+
             const priceEl = document.getElementById(`price1_${code}`);
             const price = parseFloat(priceEl.innerText);
 
@@ -1429,6 +1446,12 @@
         
         
         function addRowToModalConfirm(){
+
+          if(isExcessInStock){
+              alert('Замовлення перевищує залишок на складі!');
+              return;
+          }
+
           let total_sum = parseFloat(document.querySelector('#total_sum').innerText);
           if(total_sum===0){
             return;
