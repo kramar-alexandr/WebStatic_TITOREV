@@ -854,11 +854,11 @@
         const checkInStockColor = (row) => {
 
             if(!isExcessInStock) {
-                if(parseInt(data.fInstock, 10) < parseInt(row.fQuant, 10))
+                if(parseInt(row.fInstock, 10) < parseInt(row.fQuant, 10))
                 isExcessInStock = true;
             }
 
-            return parseInt(data.fInstock, 10) < parseInt(row.fQuant, 10) ? 'red' : 'black';
+            return parseInt(row.fInstock, 10) < parseInt(row.fQuant, 10) ? 'red' : 'black';
         };
                     
         const createOrderByCategory = (itemsByCategoryObj) => {                
