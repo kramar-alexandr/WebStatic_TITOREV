@@ -851,6 +851,15 @@
             };
         };
         
+        const checkInStockColor = (row) => {
+
+            if(!isExcessInStock) {
+                if(parseInt(data.fInstock, 10) < parseInt(row.fQuant, 10))
+                isExcessInStock = true;
+            }
+
+            return parseInt(data.fInstock, 10) < parseInt(row.fQuant, 10) ? 'red' : 'black';
+        };
                     
         const createOrderByCategory = (itemsByCategoryObj) => {                
             const sortedArray = Object.entries(itemsByCategoryObj).sort(([keyA, objA], [keyB, objB]) => {
@@ -912,7 +921,7 @@
                 },
                 { data: 'fInstock',
                     visible: false,
-                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}' style='color: ${data < row.fQuant ? 'red' : 'black'}'> ${data || ''} </div></td>` }, // 7
+                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}' style='color: ${checkInStockColor(row)} </div></td>` }, // 7
                 { data: 'fPrice1',
                     render: (data, type, row) => `<td><div id='price1_${row.fCode}'> ${data} </div></td>` // 8
                 },
@@ -923,7 +932,7 @@
                 { data: 'fQuant', // 10
                     render: (data, type, row, index)=> {
                         return `<td> 
-                            <input style='max-width: 4rem; color: ${row.fInstock < data ? 'red' : 'black'}' 
+                            <input style='max-width: 4rem; color: ${checkInStockColor(row)}' 
                             onchange="sumup(this,'${row.fCode}',${row.fWeight},${row.fVolume})" 
                             onkeypress="return handleKeyPress(event, this, '${index.row}')"
                             onfocus="this.select()"
