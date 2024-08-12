@@ -858,6 +858,8 @@
                 isExcessInStock = true;
             }
 
+            console.log(parseInt(row.fInstock, 10), parseInt(row.fQuant, 10));
+
             return parseInt(row.fInstock, 10) < parseInt(row.fQuant, 10) ? 'red' : 'black';
         };
                     
