@@ -1092,7 +1092,7 @@
 
             isExcessInStock = false;
 
-            if (!item) {
+            if (item?.fInstock < qty) {
 
                 isExcessInStock = true;
                 e.style.color = 'red';
