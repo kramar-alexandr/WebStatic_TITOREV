@@ -659,6 +659,21 @@
                 sendBtn.classList.add('loading');
                 sendBtn.disabled = true;
 
+                const priceList = getMainData();
+                resultData.data.forEach((el) => {
+
+                    const item = priceList.data.find((item) => item.fCode === el.fCode);
+
+                    console.log('parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10) :>> ', parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10));
+                    
+                    if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10) || true) {
+
+                        alert(`На складі недостатньо товару ${item.fName}!`);
+                        window.location.reload();
+                        return;
+                    }
+                });
+
                 sendOrder(1);
             });
             cancelBtn.addEventListener('click', (e) => {
@@ -1095,6 +1110,7 @@
             if (item?.fInstock < qty) {
 
                 isExcessInStock = true;
+                alert('На складі недостатньо товару!');
                 e.style.color = 'red';
                 document.getElementById(`inStock_${code}`).style.color = 'red';
                 return;
@@ -1457,7 +1473,7 @@
         function addRowToModalConfirm(){
 
           if(isExcessInStock){
-              alert('Замовлення перевищує залишок на складі!');
+              alert('На складі недостатньо товару!');
               return;
           }
 
