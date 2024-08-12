@@ -545,7 +545,7 @@
     </div>
 </div>
 <div id="confirmOrderModal" class="modal h-75" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" style="max-width: 1000px;" role="document">
         <div class="modal-content" style="max-height: calc(100vh - 80px); overflow:hidden;">
             <div class="modal-header">
                 <h5 class="modal-title text-primary">Форма відправки замовлення</h5>
@@ -554,7 +554,7 @@
                 </button>
             </div>
             <div class="modal-body" style="max-height: 50vh; overflow-y: auto;">
-                <table class="table-sm table-bordered table-striped table-curved">
+                <table class="table-sm table-bordered table-striped table-curved w-100">
                     <thead>
                         <tr>
                             <th>Код</th>
@@ -1090,6 +1090,8 @@
             e.style.color = 'black';
             document.getElementById(`inStock_${code}`).style.color = 'black';
 
+            isExcessInStock = false;
+
             if (!item) {
 
                 isExcessInStock = true;
@@ -1097,8 +1099,6 @@
                 document.getElementById(`inStock_${code}`).style.color = 'red';
                 return;
             }
-
-            isExcessInStock = false;
 
             const priceEl = document.getElementById(`price1_${code}`);
             const price = parseFloat(priceEl.innerText);
