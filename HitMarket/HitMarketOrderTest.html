@@ -921,7 +921,7 @@
                 },
                 { data: 'fInstock',
                     visible: false,
-                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}' style='color: ${checkInStockColor(row)} </div></td>` }, // 7
+                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}' style='color: ${checkInStockColor(row)}'>${data}</div></td>` }, // 7
                 { data: 'fPrice1',
                     render: (data, type, row) => `<td><div id='price1_${row.fCode}'> ${data} </div></td>` // 8
                 },
