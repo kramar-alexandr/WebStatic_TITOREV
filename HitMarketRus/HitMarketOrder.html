@@ -509,7 +509,7 @@
     </div>
 </div>
 <div id="confirmOrderModal" class="modal h-75" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" style="max-width: 1000px;" role="document">
         <div class="modal-content" style="max-height: calc(100vh - 80px); overflow:hidden;">
             <div class="modal-header">
                 <h5 class="modal-title text-primary">Форма отправки заказа</h5>
@@ -518,11 +518,12 @@
                 </button>
             </div>
             <div class="modal-body" style="max-height: 50vh; overflow-y: auto;">
-                <table class="table-sm table-bordered table-striped table-curved">
+                <table class="table-sm table-bordered table-striped table-curved w-100">
                     <thead>
                         <tr>
                             <th>Код</th>
                             <th>Название</th>
+                            <th>Остаток</th>
                             <th>Цена</th>
                             <th>Кол-во</th>
                             <th>Сумма</th>
@@ -576,6 +577,7 @@
 </div>
 
     <script>
+        let isExcessInStock = false;
         let isShowGroups = false;
         const roundValue = 10000;
         const roundSum = 100;
@@ -618,6 +620,26 @@
 
                 sendBtn.classList.add('loading');
                 sendBtn.disabled = true;
+
+                const priceList = getMainData();
+
+                resultData.data.forEach((el) => {
+
+                    const item = priceList.data.find((item) => item.fCode === el.fCode);
+
+                    if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10)) {
+
+                        isExcessInStock = true;
+                        alert(`На складе недостаточно товара!`);
+                        sendBtn.classList.remove('loading');
+                        sendBtn.disabled = false;
+                        $('#confirmOrderModal').modal('hide');
+                        window.location.reload();
+                        return;
+                    }
+                });
+
+                if(isExcessInStock) return;
                 
                 sendOrder(1);
             });
@@ -958,6 +980,15 @@
            for (let { code, qty } of data) {
                if (!qty || qty === '0') continue;
                const quantEl = datatable.$(`#quant_${code}`)[0];
+               quantEl.style.color = 'black';
+
+               const item = tableData.find((el) => el.fCode === code);
+
+               if(parseInt(item?.fInstock) < parseInt(qty, 10)){
+                 isExcessInStock = true;
+                 quantEl.style.color = 'red';
+               }
+
                if(quantEl){
                  quantEl.value = qty;
                  const [ priceEl ] = datatable.$(`#price1_${code}`);
@@ -1035,6 +1066,23 @@
 
         function sumup(e, code) {
             const qty = isNaN(parseFloat(e.value)) ? e.value = 0 : parseFloat(e.value) ;
+
+            const item = tableData.find((el) => el.fCode === code);
+
+            e.style.color = 'black';
+            document.getElementById(`inStock_${code}`).style.color = 'black';
+
+            isExcessInStock = false;
+
+            if (item?.fInstock < qty) {
+
+                isExcessInStock = true;
+                alert('На складе недостаточно товара!');
+                e.style.color = 'red';
+                document.getElementById(`inStock_${code}`).style.color = 'red';
+                return;
+            }
+
             const priceEl = document.getElementById(`price1_${code}`);
             const price = parseFloat(priceEl.innerText);
 
@@ -1390,6 +1438,12 @@
         
         
         function addRowToModalConfirm(){
+
+          if(isExcessInStock){
+              alert('На складе недостаточно товара!');
+              return;
+          }
+
           let total_sum = parseFloat(document.querySelector('#total_sum').innerText);
           if(total_sum===0){
             return;
@@ -1414,6 +1468,7 @@
             newRow.innerHTML = `
               <td>${row.fCode}</td>
               <td>${item.fName}</td>
+              <td style="text-align: right">${item.fInstock}</td>
               <td style="text-align: right">${row.fPrice}</td>
               <td style="text-align: right">${row.fQuant}</td>
               <td style="text-align: right">${row.fSum} </td>

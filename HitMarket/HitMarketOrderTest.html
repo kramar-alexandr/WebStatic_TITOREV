@@ -932,7 +932,7 @@
                 },
                 { data: 'fInstock',
                     visible: false,
-                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}'>${data}</div></td>` }, // 7
+                    render: (data, type, row) => `<td><div id='inStock_${row.fCode}'>${data || ''}</div></td>` }, // 7
                 { data: 'fPrice1',
                     render: (data, type, row) => `<td><div id='price1_${row.fCode}'> ${data} </div></td>` // 8
                 },
@@ -943,7 +943,7 @@
                 { data: 'fQuant', // 10
                     render: (data, type, row, index)=> {
                         return `<td> 
-                            <input style='max-width: 4rem;' 
+                            <input style='max-width: 4rem' 
                             onchange="sumup(this,'${row.fCode}',${row.fWeight},${row.fVolume})" 
                             onkeypress="return handleKeyPress(event, this, '${index.row}')"
                             onfocus="this.select()"
@@ -1016,7 +1016,6 @@
            resultData.data = [];
            
            for (let { code, qty } of data) {
-
                if (!qty || qty === '0') continue;
                const quantEl = datatable.$(`#quant_${code}`)[0];
                quantEl.style.color = 'black';
@@ -1507,7 +1506,7 @@
             newRow.innerHTML = `
               <td>${row.fCode}</td>
               <td>${item.fName}</td>
-               <td style="text-align: right">${item.fInstock}</td>
+              <td style="text-align: right">${item.fInstock}</td>
               <td style="text-align: right">${row.fPrice}</td>
               <td style="text-align: right">${row.fQuant}</td>
               <td style="text-align: right">${row.fSum} </td>
