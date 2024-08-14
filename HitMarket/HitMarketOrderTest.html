@@ -668,7 +668,7 @@
                     if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10)) {
 
                         isExcessInStock = true;
-                        alert(`На складі недостатньо товару ${item.fName}!`);
+                        alert(`На складі недостатньо товару!`);
                         sendBtn.classList.remove('loading');
                         sendBtn.disabled = false;
                         $('#confirmOrderModal').modal('hide');
@@ -1506,6 +1506,7 @@
             newRow.innerHTML = `
               <td>${row.fCode}</td>
               <td>${item.fName}</td>
+               <td style="text-align: right">${item.fInstock}</td>
               <td style="text-align: right">${row.fPrice}</td>
               <td style="text-align: right">${row.fQuant}</td>
               <td style="text-align: right">${row.fSum} </td>
