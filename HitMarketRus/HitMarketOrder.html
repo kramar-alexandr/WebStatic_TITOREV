@@ -1069,7 +1069,7 @@
 
             const item = tableData.find((el) => el.fCode === code);
 
-            if(item){
+            /*if(item){
                 e.style.color = 'black';
                 document.getElementById(`inStock_${code}`).style.color = 'black';
 
@@ -1083,7 +1083,7 @@
                     document.getElementById(`inStock_${code}`).style.color = 'red';
                     return;
                 }
-            }
+            }*/
 
             const priceEl = document.getElementById(`price1_${code}`);
             const price = parseFloat(priceEl.innerText);
