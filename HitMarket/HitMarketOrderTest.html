@@ -976,7 +976,7 @@
                 { data: 'fWeight' },
                 {data: 'differenceInstockQty'}
             ],
-            order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/].push(isExcessInStock ? [5, 'asc'] : [14, 'desc']),
+            order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc']],
             pageLength: 300,
             lengthMenu: [100,150,200,250],
             displayLength: 100,
@@ -988,7 +988,10 @@
                 url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/uk.json',
             }
         });
-        
+
+        if(isExcessInStock){
+            datatable.order([14, 'desc']).draw();
+        }     
         
         function findIndexByValue(array, value) {
           for (let i = 0; i < array.length; i++) {
