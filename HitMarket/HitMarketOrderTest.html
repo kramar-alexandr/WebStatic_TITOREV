@@ -1500,11 +1500,12 @@
               alert('На складі недостатньо товару!');
 
               datatable.clear();
+
+              tableData.sort((a,b) => b.differenceInstockQty - a.differenceInstockQty);
               datatable.rows.add(tableData);
 
-              setBasketValues();
               datatable.order([14, 'desc']).draw();
-              
+
               return;
           }
 
