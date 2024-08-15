@@ -782,7 +782,18 @@
         tableData = mainData.data;
         // createHeader(mainData.headerHTML);
         const itemsByCategoryObj = {};
-        mainData.data.forEach(({ level1, fCode }) => {
+        mainData.data.forEach((item) => {
+
+            const { level1, fCode } = item;
+
+            const difference = item.fInstock - item.fQuant;
+            
+            item.difference = 0;
+
+            if(difference < 0){
+                item.difference = 1;
+            }
+
             if (level1) {
                 if (!itemsByCategoryObj[level1]) {
                     itemsByCategoryObj[level1] = { items: [], sum: 0, name: level1 };
@@ -961,9 +972,10 @@
                     }
                 } ,
                 { data: 'fVolume' },
-                { data: 'fWeight' }
+                { data: 'fWeight' },
+                {data: 'difference'}
             ],
-            order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc'] ],
+            order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc'], [14, 'desc']],
             pageLength: 300,
             lengthMenu: [100,150,200,250],
             displayLength: 100,
