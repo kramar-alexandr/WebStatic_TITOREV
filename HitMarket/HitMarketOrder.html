@@ -777,9 +777,11 @@
         const customerData = getCustomerData();
         
         tableData = mainData.data;
-        // createHeader(mainData.headerHTML);
+
         const itemsByCategoryObj = {};
+
         mainData.data.forEach(({ level1, fCode }) => {
+            
             if (level1) {
                 if (!itemsByCategoryObj[level1]) {
                     itemsByCategoryObj[level1] = { items: [], sum: 0, name: level1 };

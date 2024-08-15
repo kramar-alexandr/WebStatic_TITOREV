@@ -794,12 +794,13 @@
         const customerData = getCustomerData();
         
         tableData = mainData.data;
-        // createHeader(mainData.headerHTML);
+
         const itemsByCategoryObj = {};
+
         mainData.data.forEach((item) => {
 
             const { level1, fCode } = item;
-            const qty = bascket?.data.find((el) => el.fCode === fCode)?.qty || 0;
+            const qty = bascket?.data.find((el) => el.code === fCode)?.qty || 0;
 
             const difference =  parseInt(item.fInstock, 10) -  parseInt(qty, 10);
             
