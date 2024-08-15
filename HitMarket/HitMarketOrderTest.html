@@ -1499,18 +1499,26 @@
 
               alert('На складі недостатньо товару!');
 
+              const excessArrey = [];
+
               datatable.clear();
 
               resultData.data.forEach(item => {
                 const value = tableData.find((el) => el.fCode === item.fCode);
                 value.fQuant = item.fQuant;
                 value.fSum = item.fSum;
+
+                if(value.differenceInstockQty === '1') excessArrey.push(value.fCode);
               })
 
-              tableData.sort((a,b) => b.differenceInstockQty - a.differenceInstockQty);
               datatable.rows.add(tableData);
 
               datatable.order([14, 'desc']).draw();
+
+              excessArrey.forEach((code) => {
+                  const row = datatable.row(`#quant_${code}`).node();
+                  row.style.color = 'red';
+              });
 
               return;
           }
