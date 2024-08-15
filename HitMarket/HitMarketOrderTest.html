@@ -616,7 +616,6 @@
 
         console.log('Test :>> ', "Вивід тестового повідомлення");
 
-        let isExcessInStock = false;
         let isShowGroups = false;
         const roundValue = 10000;
         const roundSum = 100;
@@ -661,6 +660,7 @@
                 sendBtn.disabled = true;
 
                 const priceList = getMainData();
+                let isExcessInStock = false;
 
                 resultData.data.forEach((el) => {
 
@@ -1035,7 +1035,6 @@
                const item = tableData.find((el) => el.fCode === code);
 
                if(parseInt(item?.fInstock) < parseInt(qty, 10)){
-                 isExcessInStock = true;
                  quantEl.style.color = 'red';
                }
               
@@ -1117,13 +1116,10 @@
             const qty = isNaN(parseFloat(e.value)) ? e.value = 0 : parseFloat(e.value) ;
 
 
-            const itemExcessInStock = tableData.find((el) => el.differenceInstockQty === '1');
             const item = tableData.find((el) => el.fCode === code);
 
             e.style.color = 'black';
             document.getElementById(`inStock_${code}`).style.color = 'black';
-
-            isExcessInStock = false;
 
             item.differenceInstockQty = '0';
 
@@ -1133,10 +1129,6 @@
                 alert('На складі недостатньо товару!');
                 e.style.color = 'red';
                 document.getElementById(`inStock_${code}`).style.color = 'red';
-            }
-
-            if(itemExcessInStock){
-                isExcessInStock = true;
             }
 
             const priceEl = document.getElementById(`price1_${code}`);
@@ -1494,8 +1486,10 @@
         
         
         function addRowToModalConfirm(){
+            
+          const itemExcessInStock = tableData.find((el) => el.differenceInstockQty === '1');
 
-          if(isExcessInStock){
+          if(itemExcessInStock){
 
               alert('На складі недостатньо товару!');
 
