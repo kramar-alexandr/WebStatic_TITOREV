@@ -987,11 +987,7 @@
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/uk.json',
             }
-        });
-
-        if(isExcessInStock){
-            datatable.order([14, 'desc']).draw();
-        }     
+        });    
         
         function findIndexByValue(array, value) {
           for (let i = 0; i < array.length; i++) {
@@ -1494,6 +1490,7 @@
 
           if(isExcessInStock){
               alert('На складі недостатньо товару!');
+              datatable.order([14, 'desc']).draw();
               return;
           }
 
