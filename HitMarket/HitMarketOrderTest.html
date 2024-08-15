@@ -921,6 +921,8 @@
         createOrderByCategory(itemsCategory);
         addListeners();
 
+        console.log('tableData :>> ', tableData);
+
         let datatable = new DataTable('#example', {
             data: tableData,/*,
             fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull)=>{
