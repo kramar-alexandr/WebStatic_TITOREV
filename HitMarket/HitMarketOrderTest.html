@@ -773,8 +773,22 @@
             return result;
         }
         
-        
-        
+        const getBasket = () => {
+             const url = `./WebgetBasketQT.hal?pricelist=${pricelist}`;
+             const xmlHttp = new XMLHttpRequest();
+             xmlHttp.open( "GET", url, false );
+             xmlHttp.send(null);
+             if (!xmlHttp.responseText) return undefined;
+             if(xmlHttp.responseText=="notloged"){
+                location.reload(); 
+                return undefined;
+              }
+             return JSON.parse(xmlHttp.responseText);  
+         }
+
+        const bascket = getBasket();
+
+        console.log('bascket :>> ', bascket);
         
         const mainData = getMainData();
         const customerData = getCustomerData();
@@ -785,8 +799,9 @@
         mainData.data.forEach((item) => {
 
             const { level1, fCode } = item;
+            const qty = bascket?.data.find((el) => el.fCode === fCode)?.qty || 0;
 
-            const difference =  parseInt(item.fInstock, 10) -  parseInt(item.fQuant, 10);
+            const difference =  parseInt(item.fInstock, 10) -  parseInt(qty, 10);
             
             item.differenceInstockQty = '0';
             if(difference < 0){
@@ -802,20 +817,6 @@
         });
         const getItemsByCategory = () => itemsByCategoryObj;
 
-        const getBasket = () => {
-             const url = `./WebgetBasketQT.hal?pricelist=${pricelist}`;
-             const xmlHttp = new XMLHttpRequest();
-             xmlHttp.open( "GET", url, false );
-             xmlHttp.send(null);
-             if (!xmlHttp.responseText) return undefined;
-             if(xmlHttp.responseText=="notloged"){
-                location.reload(); 
-                return undefined;
-              }
-             return JSON.parse(xmlHttp.responseText);  
-         }
-
-        const bascket = getBasket();
         setInterval(getBasket,30000);
 
         let timeToServerError = 20000;
