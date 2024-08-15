@@ -1050,7 +1050,6 @@
                  resultData.data.push({fCode:code,fQuant:qty,fPrice:parseFloat(price),fSum:Math.round((price * qty)*roundSum)/roundSum});
                }
            }
-           const initedData = datatable.rows().data().toArray();
            resultData.totalSum = Math.round(totalSum * roundSum)/roundSum;
            resultData.totalQty = Math.round(totalQty);
            //reCalcItemsByCategory();
@@ -1497,9 +1496,15 @@
         function addRowToModalConfirm(){
 
           if(isExcessInStock){
+
               alert('На складі недостатньо товару!');
-              datatable.order([5, 'asc']).draw();
+
+              datatable.clear();
+              datatable.rows.add(tableData);
+
+              setBasketValues();
               datatable.order([14, 'desc']).draw();
+              
               return;
           }
 
