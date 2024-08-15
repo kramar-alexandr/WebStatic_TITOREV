@@ -788,10 +788,9 @@
 
             const difference =  parseInt(item.fInstock, 10) -  parseInt(item.fQuant, 10);
             
-            item.difference = '0';
-
+            item.differenceInstockQty = '0';
             if(difference < 0){
-                item.difference = '1';
+                item.differenceInstockQty = '1';
             }
 
             if (level1) {
@@ -921,8 +920,6 @@
         createOrderByCategory(itemsCategory);
         addListeners();
 
-        console.log('tableData :>> ', tableData);
-
         let datatable = new DataTable('#example', {
             data: tableData,/*,
             fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull)=>{
@@ -975,6 +972,7 @@
                 } ,
                 { data: 'fVolume' },
                 { data: 'fWeight' },
+                {data: 'differenceInstockQty'}
             ],
             order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc']],
             pageLength: 300,
