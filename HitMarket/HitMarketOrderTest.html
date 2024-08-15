@@ -1498,6 +1498,7 @@
 
           if(isExcessInStock){
               alert('На складі недостатньо товару!');
+              datatable.order([5, 'asc']).draw();
               datatable.order([14, 'desc']).draw();
               return;
           }
