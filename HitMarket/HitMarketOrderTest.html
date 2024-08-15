@@ -786,7 +786,7 @@
 
             const { level1, fCode } = item;
 
-            const difference = item.fInstock - item.fQuant;
+            const difference =  parseInt(item.fInstock, 10) -  parseInt(item.fQuant, 10);
             
             item.difference = 0;
 
@@ -1119,7 +1119,7 @@
 
             const item = tableData.find((el) => el.fCode === code);
 
-            /*e.style.color = 'black';
+            e.style.color = 'black';
             document.getElementById(`inStock_${code}`).style.color = 'black';
 
             isExcessInStock = false;
@@ -1131,7 +1131,7 @@
                 e.style.color = 'red';
                 document.getElementById(`inStock_${code}`).style.color = 'red';
                 return;
-            }*/
+            }
 
             const priceEl = document.getElementById(`price1_${code}`);
             const price = parseFloat(priceEl.innerText);
