@@ -1117,6 +1117,8 @@
         function sumup(e, code) {
             const qty = isNaN(parseFloat(e.value)) ? e.value = 0 : parseFloat(e.value) ;
 
+
+            const itemExcessInStock = tableData.find((el) => el.differenceInstockQty === '1');
             const item = tableData.find((el) => el.fCode === code);
 
             e.style.color = 'black';
@@ -1124,12 +1126,18 @@
 
             isExcessInStock = false;
 
+            item.differenceInstockQty = '0';
+
             if (item?.fInstock < qty) {
 
-                isExcessInStock = true;
+                item.differenceInstockQty = '1';
                 alert('На складі недостатньо товару!');
                 e.style.color = 'red';
                 document.getElementById(`inStock_${code}`).style.color = 'red';
+            }
+
+            if(itemExcessInStock){
+                isExcessInStock = true;
             }
 
             const priceEl = document.getElementById(`price1_${code}`);
