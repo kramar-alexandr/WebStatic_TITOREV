@@ -770,27 +770,6 @@
             return result;
         }
         
-        
-        
-        
-        const mainData = getMainData();
-        const customerData = getCustomerData();
-        
-        tableData = mainData.data;
-
-        const itemsByCategoryObj = {};
-
-        mainData.data.forEach(({ level1, fCode }) => {
-            
-            if (level1) {
-                if (!itemsByCategoryObj[level1]) {
-                    itemsByCategoryObj[level1] = { items: [], sum: 0, name: level1 };
-                }
-                itemsByCategoryObj[level1].items.push(fCode);
-            }
-        });
-        const getItemsByCategory = () => itemsByCategoryObj;
-
         const getBasket = () => {
              const url = `./WebgetBasketQT.hal?pricelist=${pricelist}`;
              const xmlHttp = new XMLHttpRequest();
@@ -805,6 +784,37 @@
          }
 
         const bascket = getBasket();
+
+        console.log('bascket :>> ', bascket);
+        
+        const mainData = getMainData();
+        const customerData = getCustomerData();
+        
+        tableData = mainData.data;
+
+        const itemsByCategoryObj = {};
+
+        mainData.data.forEach((item) => {
+
+            const { level1, fCode } = item;
+            const qty = bascket?.data.find((el) => el.code === fCode)?.qty || 0;
+
+            const difference =  parseInt(item.fInstock, 10) -  parseInt(qty, 10);
+            
+            item.differenceInstockQty = '0';
+            if(difference < 0){
+                item.differenceInstockQty = '1';
+            }
+
+            if (level1) {
+                if (!itemsByCategoryObj[level1]) {
+                    itemsByCategoryObj[level1] = { items: [], sum: 0, name: level1 };
+                }
+                itemsByCategoryObj[level1].items.push(fCode);
+            }
+        });
+        const getItemsByCategory = () => itemsByCategoryObj;
+
         setInterval(getBasket,30000);
 
         let timeToServerError = 20000;
@@ -960,7 +970,8 @@
                     }
                 } ,
                 { data: 'fVolume' },
-                { data: 'fWeight' }
+                { data: 'fWeight' },
+                {data: 'differenceInstockQty'}
             ],
             order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc'] ],
             pageLength: 300,
@@ -968,13 +979,12 @@
             displayLength: 100,
             columnDefs:[
                 { sortable: false, targets: [  7, 8, 9, 10, 11 ] },
-                { visible: false, targets: [ 0, 1, 2, 3 ,12, 13 ] }
+                { visible: false, targets: [ 0, 1, 2, 3 ,12, 13, 14 ] }
             ],
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/uk.json',
             }
-        });
-        
+        });    
         
         function findIndexByValue(array, value) {
           for (let i = 0; i < array.length; i++) {
@@ -1117,7 +1127,6 @@
                 alert('На складі недостатньо товару!');
                 e.style.color = 'red';
                 document.getElementById(`inStock_${code}`).style.color = 'red';
-                return;
             }
 
             const priceEl = document.getElementById(`price1_${code}`);
@@ -1478,6 +1487,7 @@
 
           if(isExcessInStock){
               alert('На складі недостатньо товару!');
+              datatable.order([14, 'desc']).draw();
               return;
           }
 
