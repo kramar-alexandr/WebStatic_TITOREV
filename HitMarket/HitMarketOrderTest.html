@@ -1516,6 +1516,8 @@
               return;
           }
 
+          resultData.data = resultData.data.filter((el) => el.fQuant !== '0' && el.fQuant !== 0);
+
           let total_sum = parseFloat(document.querySelector('#total_sum').innerText);
           if(total_sum===0){
             return;
