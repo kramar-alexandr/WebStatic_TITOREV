@@ -1516,8 +1516,7 @@
               datatable.order([14, 'desc']).draw();
 
               excessArrey.forEach((code) => {
-                  const row = datatable.row(`#quant_${code}`).node();
-                  row.style.color = 'red';
+                  document.getElementById(`quant_${code}`).style.color = 'red';
               });
 
               return;
