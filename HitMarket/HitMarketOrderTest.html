@@ -974,13 +974,13 @@
                 { data: 'fWeight' },
                 {data: 'differenceInstockQty'}
             ],
-            order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc']],
+            order: [ /*[0, 'asc'],[1, 'asc'],[2, 'asc'],[3, 'asc'],*/[5, 'asc'], [14, 'desc']],
             pageLength: 300,
             lengthMenu: [100,150,200,250],
             displayLength: 100,
             columnDefs:[
                 { sortable: false, targets: [  7, 8, 9, 10, 11 ] },
-                { visible: false, targets: [ 0, 1, 2, 3 ,12, 13 ] }
+                { visible: false, targets: [ 0, 1, 2, 3 ,12, 13, 14 ] }
             ],
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/uk.json',
