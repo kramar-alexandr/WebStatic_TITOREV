@@ -887,7 +887,7 @@
                 clearTimeout(timeoutId); // Якщо запит завершився, скасовуємо таймер
 
                 const { status } = xmlhttp;
-                console.log('status :>> ', status);
+                console.log('xmlhttp :>> ', xmlhttp);
                 
                 if (status !== 200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
                 if (!isOk) return;// добавление в корзицу
