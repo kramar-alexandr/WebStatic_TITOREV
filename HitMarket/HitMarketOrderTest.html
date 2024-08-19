@@ -618,19 +618,17 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Дійсно очистити замовлення?</h5>
+          <h5 class="modal-title">На складі недостатньо товару!</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <p>На складі недостатньо товару!</p>
-            <br>
-            <p>З питань до виробництва товару звертайтесь за телефоном: </p>
+            <p class="m-0">З питань до виробництва товару звертайтесь за телефоном: </p>
             <a href="tel:+380933732427">+38 (093) 373 24 27</a>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
         </div>
       </div>
     </div>
@@ -695,7 +693,7 @@
                     if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10)) {
 
                         isExcessInStock = true;
-                        document.getElementById('productEndingModal').modal('show');
+                        $('#productEndingModal').modal('show');
                         sendBtn.classList.remove('loading');
                         sendBtn.disabled = false;
                         $('#confirmOrderModal').modal('hide');
@@ -1158,7 +1156,7 @@
             if (item?.fInstock < qty) {
 
                 item.differenceInstockQty = '1';
-                document.getElementById('productEndingModal').modal('show');
+                $('#productEndingModal').modal('show');
                 e.style.color = 'red';
                 document.getElementById(`inStock_${code}`).style.color = 'red';
             }
@@ -1523,7 +1521,7 @@
 
           if(itemExcessInStock){
 
-              document.getElementById('productEndingModal').modal('show');
+              $('#productEndingModal').modal('show');
 
               const excessArrey = [];
 
