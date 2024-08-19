@@ -712,8 +712,8 @@
 
             showOrderBtn.addEventListener('click', (e) => {
 
-                let orderedFiltersInput = document.getElementById('orderedFilterInput');
-                orderedFiltersInput.checked = !orderedFiltersInput.checked;
+                let orderedCheckBox = document.getElementById('orderedFilterInput');
+                orderedCheckBox.checked = !orderedCheckBox.checked;
 
                 clearFilters();
                 orderedData = datatable.$('input').serializeArray();
@@ -1405,6 +1405,8 @@
               }
               return true;
           });
+
+          let orderedFiltersInput = document.getElementById('orderedFilterInput');
 
           var orderedData = []
           orderedFiltersInput.onchange = ()=>{
