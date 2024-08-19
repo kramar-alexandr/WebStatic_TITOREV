@@ -318,6 +318,7 @@
           <div>
               <button class="btn_submit" onclick="addRowToModalConfirm()">Надіслати замовлення</button>
               <button class="btn_submit" data-toggle="modal" data-target="#cancelOrderModal" style="background-color: red;">Очистити замовлення</button>
+              <button class="btn_submit" id="showOrder" style="background-color: #54c0ff;">Тільки замовлене</button>
           </div>
       </div>
       <div class="gap-2 w-25 d-flex justify-content-end align-items-center">
@@ -370,7 +371,7 @@
                                 <label class="form-check-label" for="orderedFilterInput">
                                     <input id="orderedFilterInput" class="form-check-input" type="checkbox"
                                         name="OnlyOrdered" value="OnlyOrdered">
-                                    Тількі замовлене.
+                                    Тільки замовлене.
                                 </label>
                             </div>
 
@@ -613,6 +614,23 @@
     </div>
 </div>
 
+<div id="test" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Дійсно очистити замовлення?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button id="cancelBtn" type="button" class="btn btn-danger">Очистити замовлення</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <script>
         let isShowGroups = false;
         const roundValue = 10000;
@@ -634,6 +652,8 @@
         
         const sendBtn = document.getElementById('sendOrderBtn');
         const cancelBtn = document.getElementById('cancelOrderBtn');
+        const showOrderBtn = document.getElementById('showOrder');
+        
         // sendBtn.style.visibility = contact ? 'visible' : 'hidden';
 
         const calcCategoryDivHeight = () => {
@@ -680,15 +700,21 @@
 
                 sendOrder(1);
             });
+
             cancelBtn.addEventListener('click', (e) => {
                 $('#cancelOrderModal').modal('hide');
                 sendOrder(-1);
                 window.location.reload();
             });
+
+            showOrderBtn.addEventListener('click', (e) => {
+                document.getElementById('orderedFilterInput').click();
+            });
+
             document.getElementById('done').addEventListener('click', () => {
                 window.location.reload();
             });
-            
+
             //changePasswordConfirm
             document.getElementById('changePasswordConfirm').addEventListener('click', () => {
                 const password1 = $('#newPassword')[0].value;
@@ -1370,8 +1396,8 @@
               }
               return true;
           });
-          let orderedFiltersInput = document.getElementById('orderedFilterInput');
 
+          let orderedFiltersInput = document.getElementById('orderedFilterInput');
 
           var orderedData = []
           orderedFiltersInput.onchange = ()=>{

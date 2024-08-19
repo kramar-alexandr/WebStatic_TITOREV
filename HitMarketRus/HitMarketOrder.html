@@ -318,6 +318,7 @@
           <div>
               <button class="btn_submit" onclick="addRowToModalConfirm()">Отправить заказ</button>
               <button class="btn_submit" data-toggle="modal" data-target="#cancelOrderModal" style="background-color: red;">Очистить заказ</button>
+              <button class="btn_submit" id="showOrder" style="background-color: #54c0ff;">Только заказанное</button>
           </div>
       </div>
       <div class="gap-2 w-25 d-flex justify-content-end align-items-center">
@@ -599,6 +600,8 @@
         
         const sendBtn = document.getElementById('sendOrderBtn');
         const cancelBtn = document.getElementById('cancelOrderBtn');
+        const showOrderBtn = document.getElementById('showOrder');
+        
         // sendBtn.style.visibility = contact ? 'visible' : 'hidden';
 
         const calcCategoryDivHeight = () => {
@@ -644,11 +647,17 @@
                 
                 sendOrder(1);
             });
+            
             cancelBtn.addEventListener('click', (e) => {
                 $('#cancelOrderModal').modal('hide');
                 sendOrder(-1);
                 window.location.reload();
             });
+
+            showOrderBtn.addEventListener('click', (e) => {
+                document.getElementById('orderedFilterInput').click();
+            });
+
             document.getElementById('done').addEventListener('click', () => {
                 window.location.reload();
             });
@@ -1327,8 +1336,8 @@
               }
               return true;
           });
-          let orderedFiltersInput = document.getElementById('orderedFilterInput');
 
+          let orderedFiltersInput = document.getElementById('orderedFilterInput');
 
           var orderedData = []
           orderedFiltersInput.onchange = ()=>{
