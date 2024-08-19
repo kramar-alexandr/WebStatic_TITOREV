@@ -888,7 +888,7 @@
 
                 const { status } = xmlhttp;
                 console.log('status :>> ', status);
-                if (status!==200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
+                if (status!==200 && status!==0) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
                 if (!isOk) return;// добавление в корзицу
                 if (!xmlhttp.responseText) return;
                 const resp = JSON.parse(xmlhttp.responseText);
