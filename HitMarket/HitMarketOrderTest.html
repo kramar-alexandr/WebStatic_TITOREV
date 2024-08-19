@@ -711,13 +711,7 @@
             });
 
             showOrderBtn.addEventListener('click', (e) => {
-
-                let orderedCheckBox = document.getElementById('orderedFilterInput');
-                orderedCheckBox.checked = !orderedCheckBox.checked;
-
-                clearFilters();
-                orderedData = datatable.$('input').serializeArray();
-                datatable.draw();
+                document.getElementById('orderedFilterInput').click();
             });
 
             document.getElementById('done').addEventListener('click', () => {
