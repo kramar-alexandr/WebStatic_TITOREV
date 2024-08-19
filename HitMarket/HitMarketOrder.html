@@ -706,7 +706,7 @@
             cancelBtn.addEventListener('click', (e) => {
                 $('#cancelOrderModal').modal('hide');
                 sendOrder(-1);
-                window.location.reload();
+                //window.location.reload();
             });
 
             showOrderBtn.addEventListener('click', (e) => {
@@ -889,7 +889,7 @@
                 const { status } = xmlhttp;
                 console.log('xmlhttp :>> ', xmlhttp);
                 
-                if (status !== 200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
+                //if (status !== 200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
                 if (!isOk) return;// добавление в корзицу
                 if (!xmlhttp.responseText) return;
                 const resp = JSON.parse(xmlhttp.responseText);
