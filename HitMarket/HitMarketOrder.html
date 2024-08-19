@@ -613,18 +613,21 @@
     </div>
 </div>
 
-<div id="test" class="modal" tabindex="-1" role="dialog">
+<div id="productEndingModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Дійсно очистити замовлення?</h5>
+          <h5 class="modal-title">⚠️ На складі недостатньо товару!</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <div class="modal-body">
+            <p class="m-0">З питань до виробництва товару звертайтесь за телефоном: </p>
+            <a href="tel:+380933732427">+38 (093) 373 24 27</a>
+        </div>
         <div class="modal-footer">
-          <button id="cancelBtn" type="button" class="btn btn-danger">Очистити замовлення</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
         </div>
       </div>
     </div>
@@ -686,7 +689,7 @@
                     if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10)) {
 
                         isExcessInStock = true;
-                        alert(`На складі недостатньо товару!`);
+                        $('#productEndingModal').modal('show');
                         sendBtn.classList.remove('loading');
                         sendBtn.disabled = false;
                         $('#confirmOrderModal').modal('hide');
@@ -1149,7 +1152,7 @@
             if (item?.fInstock < qty) {
 
                 item.differenceInstockQty = '1';
-                alert('На складі недостатньо товару!');
+                $('#productEndingModal').modal('show');
                 e.style.color = 'red';
                 document.getElementById(`inStock_${code}`).style.color = 'red';
             }
@@ -1514,7 +1517,7 @@
 
           if(itemExcessInStock){
 
-              alert('На складі недостатньо товару!');
+              $('#productEndingModal').modal('show');
 
               const excessArrey = [];
 
