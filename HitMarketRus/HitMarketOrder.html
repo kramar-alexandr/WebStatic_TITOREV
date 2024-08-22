@@ -991,12 +991,12 @@
                const quantEl = datatable.$(`#quant_${code}`)[0];
                quantEl.style.color = 'black';
 
-               const item = tableData.find((el) => el.fCode === code);
+            //    const item = tableData.find((el) => el.fCode === code);
 
-               if(parseInt(item?.fInstock) < parseInt(qty, 10)){
-                 isExcessInStock = true;
-                 quantEl.style.color = 'red';
-               }
+            //    if(parseInt(item?.fInstock) < parseInt(qty, 10)){
+            //      isExcessInStock = true;
+            //      quantEl.style.color = 'red';
+            //    }
 
                if(quantEl){
                  quantEl.value = qty;
