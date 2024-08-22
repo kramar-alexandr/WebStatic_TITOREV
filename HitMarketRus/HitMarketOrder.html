@@ -626,23 +626,23 @@
 
                 const priceList = getMainData();
 
-                resultData.data.forEach((el) => {
+                // resultData.data.forEach((el) => {
 
-                    const item = priceList.data.find((item) => item.fCode === el.fCode);
+                //     const item = priceList.data.find((item) => item.fCode === el.fCode);
 
-                    if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10)) {
+                //     if ( parseInt(item.fInstock, 10)  <  parseInt(el.fQuant, 10)) {
 
-                        isExcessInStock = true;
-                        alert(`На складе недостаточно товара!`);
-                        sendBtn.classList.remove('loading');
-                        sendBtn.disabled = false;
-                        $('#confirmOrderModal').modal('hide');
-                        window.location.reload();
-                        return;
-                    }
-                });
+                //         isExcessInStock = true;
+                //         alert(`На складе недостаточно товара!`);
+                //         sendBtn.classList.remove('loading');
+                //         sendBtn.disabled = false;
+                //         $('#confirmOrderModal').modal('hide');
+                //         window.location.reload();
+                //         return;
+                //     }
+                // });
 
-                if(isExcessInStock) return;
+                // if(isExcessInStock) return;
                 
                 sendOrder(1);
             });
@@ -1450,10 +1450,10 @@
         
         function addRowToModalConfirm(){
 
-          if(isExcessInStock){
-              alert('На складе недостаточно товара!');
-              return;
-          }
+        //   if(isExcessInStock){
+        //       alert('На складе недостаточно товара!');
+        //       return;
+        //   }
 
           let total_sum = parseFloat(document.querySelector('#total_sum').innerText);
           if(total_sum===0){
