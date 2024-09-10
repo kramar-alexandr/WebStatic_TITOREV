@@ -281,6 +281,7 @@
             }
 
             .rate-styly{
+                text-wrap: nowrap;
                 font-size: 19px;
                 color: black;
                 border: 1px solid black;
@@ -821,7 +822,7 @@
             const ratefield = document.getElementById('rateId');
             ratefield.innerText = res.result;
 
-            return result;
+            return res;
         }
         getCurRate();
 
