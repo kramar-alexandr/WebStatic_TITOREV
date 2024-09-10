@@ -792,6 +792,21 @@
             const result = JSON.parse(xmlHttp.responseText);
             return result;
         }
+
+        const getCurRate = () => {
+            
+            const url = `./WebGetCurRate.hal`;
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", url, false );
+            xmlHttp.send(null);
+            const result = JSON.parse(xmlHttp.responseText);
+
+            console.log('result :>> ', result);
+            
+            return result;
+        }
+        getCurRate();
+
         
         const getCustomerData = () => {
             const url = `./WebgetCustomerData.hal`;
