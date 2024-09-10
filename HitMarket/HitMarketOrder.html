@@ -280,6 +280,19 @@
                 animation: spin 1s linear infinite;
             }
 
+            .rate-styly{
+                text-wrap: nowrap;
+                font-size: 19px;
+                color: black;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 0px 3px 0 3px;
+            }
+
+            #rateId{
+                color: red;
+            }
+
             @keyframes spin {
                 0% {
                     transform: translateY(-50%) rotate(0deg);
@@ -425,6 +438,11 @@
                     <div>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#passwordModal" onclick="">Змінити пароль</button>
                     </div>
+                </div>
+                <div class="d-flex flex-column">   
+                    <div class="rate-styly" >
+                        Курс: 
+                        <span id="rateId"></span></div>         
                 </div>
                 <div class="w-50 d-flex flex-column justify-content-end align-items-end text-right">
                     <img style="margin-bottom: -5px;" src="./logo.png" alt="HIT MARKET logo" width="382px">
@@ -789,6 +807,22 @@
             const result = JSON.parse(xmlHttp.responseText);
             return result;
         }
+
+        const getCurRate = () => {
+            
+            const url = `./WebGetCurRate.hal`;
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", url, false );
+            xmlHttp.send(null);
+            const res = JSON.parse(xmlHttp.responseText);
+
+            const ratefield = document.getElementById('rateId');
+            ratefield.innerText = res.result;
+
+            return res;
+        }
+        getCurRate();
+
         
         const getCustomerData = () => {
             const url = `./WebgetCustomerData.hal`;
