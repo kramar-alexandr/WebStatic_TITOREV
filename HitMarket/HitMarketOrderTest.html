@@ -964,10 +964,6 @@
                 const resultString = JSON.stringify(res); 
                 xmlhttp.send(resultString);
 
-                if(xmlhttp.status !== 200){
-                    throw new Error(`Помилка ${xmlhttp.status}`);
-                }
-
                 const timeoutId = setTimeout(() => {
                     alert('⚠️ Сервер не відповідає. Будь ласка, спробуйте пізніше.\n\nСпробуйте перезавантажити сторінку.');
 
@@ -984,7 +980,12 @@
                     clearTimeout(timeoutId); // Якщо запит завершився, скасовуємо таймер
 
                     const { status } = xmlhttp;
-                    if (status !== 200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
+
+                    if (status !== 200) {
+                         alert('Щось пішло не так. Зв\'яжіться з адміністратором!');
+                        throw new Error(`Помилка ${xmlhttp.status}`);
+                    }
+
                     if (!isOk) return;// добавление в корзицу
                     if (!xmlhttp.responseText) return;
                     const resp = JSON.parse(xmlhttp.responseText);
@@ -1007,7 +1008,6 @@
                 };
             } catch (error) {
                 console.error('error sendOrder', error);
-                alert('Помилка при відправці замовлення. Спробуйте ще раз.');
             } 
         };
                     
