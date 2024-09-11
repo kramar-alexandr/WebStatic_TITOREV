@@ -839,8 +839,8 @@
                 xmlHttp.open( "GET", url, false );
                 xmlHttp.send(null);
 
-                if(xmlhttp.status !== 200){
-                    throw new Error(`Помилка ${xmlhttp.status}`);
+                if(xmlHttp.status !== 200){
+                    throw new Error(`Помилка ${xmlHttp.status}`);
                 }
 
                 const res = JSON.parse(xmlHttp.responseText);
@@ -864,8 +864,8 @@
                 xmlHttp.open( "GET", url, false );
                 xmlHttp.send(null);
 
-                if(xmlhttp.status !== 200){
-                    throw new Error(`Помилка ${xmlhttp.status}`);
+                if(xmlHttp.status !== 200){
+                    throw new Error(`Помилка ${xmlHttp.status}`);
                 }
 
                 const result = JSON.parse(xmlHttp.responseText);
@@ -886,8 +886,8 @@
                 xmlHttp.open( "GET", url, false );
                 xmlHttp.send(null);
 
-                if(xmlhttp.status !== 200){
-                       throw new Error(`Помилка ${xmlhttp.status}`);
+                if(xmlHttp.status !== 200){
+                       throw new Error(`Помилка ${xmlHttp.status}`);
                    }
 
                 if (!xmlHttp.responseText) return undefined;
@@ -944,7 +944,7 @@
                 
                 resultData.ok = isOk || 0;
                 let res = resultData;
-                
+
                 const url = `./WebsendOrderQT.hal`; // ?pricelist=${pricelist}&contact=${contact}
                 const xmlhttp = new XMLHttpRequest();
                 xmlhttp.open("POST", url);
@@ -963,26 +963,26 @@
                 */
                 const resultString = JSON.stringify(res); 
                 xmlhttp.send(resultString);
-                
+
                 if(xmlhttp.status !== 200){
                     throw new Error(`Помилка ${xmlhttp.status}`);
                 }
-            
+
                 const timeoutId = setTimeout(() => {
                     alert('⚠️ Сервер не відповідає. Будь ласка, спробуйте пізніше.\n\nСпробуйте перезавантажити сторінку.');
-                
+
                     sendBtn.classList.remove('loading');
                     sendBtn.disabled = false;
                     $('#confirmOrderModal').modal('hide');
-                
+
                     xmlhttp.abort(); // Прериваємо запит, якщо він триває занадто довго
                 }, timeToServerError); // 20 секунд
-            
+
                 xmlhttp.onreadystatechange = () => {
-                
+
                     if (xmlhttp.readyState !== 4) return; // Чекаємо, поки запит не буде завершений
                     clearTimeout(timeoutId); // Якщо запит завершився, скасовуємо таймер
-                
+
                     const { status } = xmlhttp;
                     if (status !== 200) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
                     if (!isOk) return;// добавление в корзицу
@@ -992,9 +992,9 @@
                     if (sts==1 && message!=="") {
                         $('#modal_message').text(message);
                         $('#modal').modal('show');
-                    
+
                         const sendBtn = document.getElementById('sendOrderBtn');
-                    
+
                         sendBtn.classList.remove('loading');
                         sendBtn.disabled = false;
                         $('#confirmOrderModal').modal('hide');
