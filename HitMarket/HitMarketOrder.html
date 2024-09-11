@@ -737,7 +737,8 @@
 
             //changePasswordConfirm
             document.getElementById('changePasswordConfirm').addEventListener('click', () => {
-                const password1 = $('#newPassword')[0].value;
+                try {
+                    const password1 = $('#newPassword')[0].value;
                 const password2 = $('#confirmPassword')[0].value;
                 if(password1 && password2 && password1!=='' && password2!=='' && password1==password2){
                   $('#passwordModal').modal('hide');
@@ -748,14 +749,23 @@
                   xmlhttp.open("POST", url, false);
                   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                   xmlhttp.send(changePasJS);
+
+                  if(xmlhttp.status !== 200){
+                    throw new Error(`Помилка ${xmlhttp.status}`);
+                  }
+
                   const result = xmlhttp.responseText;
                   console.log('result',result);
                   if(result=="ok"){
                     document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
                     window.location.reload();
                   }
+                 
                 }
-
+                } catch (error) {
+                    console.error('error changePasswordConfirm', error);
+                    alert('Помилка при зміні паролю. Зв\'язок із сервером втрачено. Спробуйте перезавантажити сторінку.');
+                }
             });
             
             
@@ -795,55 +805,98 @@
         }
         
         const getMainData = () => {
-            if(pricelist){
-              if(pricelist.length!=44){
-                pricelist = getCookie('pricelist');
-              }
+
+            try {
+                if(pricelist){
+                  if(pricelist.length!=44){
+                    pricelist = getCookie('pricelist');
+                  }
+                }
+                const url = `./WebgetItemsJSON.hal?pricelist=${pricelist}`;
+                const xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", url, false );
+                xmlHttp.send(null);
+
+                if(xmlHttp.status !== 200){
+                    throw new Error(`Помилка ${xmlHttp.status}`);
+                }
+
+                const result = JSON.parse(xmlHttp.responseText);
+                return result;
+            } catch (error) {
+                console.error('error getMainData', error);
+                alert('Помилка при завантаженні даних. Зв\'язок із сервером втрачено. Спробуйте перезавантажити сторінку.');
             }
-            const url = `./WebgetItemsJSON.hal?pricelist=${pricelist}`;
-            const xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", url, false );
-            xmlHttp.send(null);
-            const result = JSON.parse(xmlHttp.responseText);
-            return result;
         }
 
         const getCurRate = () => {
-            
-            const url = `./WebGetCurRate.hal`;
-            const xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", url, false );
-            xmlHttp.send(null);
-            const res = JSON.parse(xmlHttp.responseText);
+            try {
+                const url = `./WebGetCurRate.hal`;
+                const xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", url, false );
+                xmlHttp.send(null);
 
-            const ratefield = document.getElementById('rateId');
-            ratefield.innerText = res.result;
+                if(xmlHttp.status !== 200){
+                    throw new Error(`Помилка ${xmlHttp.status}`);
+                }
 
-            return res;
+                const res = JSON.parse(xmlHttp.responseText);
+
+                const ratefield = document.getElementById('rateId');
+                ratefield.innerText = res.result;
+
+                return res;
+            } catch (error) {
+                console.error('error getCurRate', error);
+                alert('Помилка при завантаженні курсу валют. Зв\'язок із сервером втрачено. Спробуйте перезавантажити сторінку.');
+            }                   
         }
         getCurRate();
 
         
         const getCustomerData = () => {
-            const url = `./WebgetCustomerData.hal`;
-            const xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", url, false );
-            xmlHttp.send(null);
-            const result = JSON.parse(xmlHttp.responseText);
-            return result;
+            try {
+                const url = `./WebgetCustomerData.hal`;
+                const xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", url, false );
+                xmlHttp.send(null);
+
+                if(xmlHttp.status !== 200){
+                    throw new Error(`Помилка ${xmlHttp.status}`);
+                }
+
+                const result = JSON.parse(xmlHttp.responseText);
+                return result;
+
+            } catch (error) {
+                console.error('error getCustomerData', error);
+                alert('Помилка при завантаженні даних користувача. Зв\'язок із сервером втрачено. Спробуйте перезавантажити сторінку.');
+            }
+           
         }
         
         const getBasket = () => {
-             const url = `./WebgetBasketQT.hal?pricelist=${pricelist}`;
-             const xmlHttp = new XMLHttpRequest();
-             xmlHttp.open( "GET", url, false );
-             xmlHttp.send(null);
-             if (!xmlHttp.responseText) return undefined;
-             if(xmlHttp.responseText=="notloged"){
-                location.reload(); 
-                return undefined;
-              }
-             return JSON.parse(xmlHttp.responseText);  
+
+            try {
+                const url = `./WebgetBasketQT.hal?pricelist=${pricelist}`;
+                const xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", url, false );
+                xmlHttp.send(null);
+
+                if(xmlHttp.status !== 200){
+                       throw new Error(`Помилка ${xmlHttp.status}`);
+                   }
+
+                if (!xmlHttp.responseText) return undefined;
+                if(xmlHttp.responseText=="notloged"){
+                   location.reload(); 
+                   return undefined;
+                 }
+                return JSON.parse(xmlHttp.responseText); 
+            } catch (error) {
+                console.error('error getBasket', error);
+                alert('Помилка при завантаженні корзини. Зв\'язок із сервером втрачено. Спробуйте перезавантажити сторінку.');
+            }
          }
 
         const bascket = getBasket();
@@ -882,67 +935,77 @@
 
         let timeToServerError = 20000;
 
-        const sendOrder = (isOk) => {                
-            resultData.ok = isOk || 0;
-            let res = resultData;
+        const sendOrder = (isOk) => { 
+            
+            try {
+                
+                resultData.ok = isOk || 0;
+                let res = resultData;
 
-            const url = `./WebsendOrderQT.hal`; // ?pricelist=${pricelist}&contact=${contact}
-            const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("POST", url);
-            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            /*
-            console.log('resultData.data :>> ', resultData.data);
-            const filteredArray = resultData.data.filter((el) => {
-                return el.fQuant !== '0' && el.fQuant !== 0;
-                // if (!el.fQuant || el.fQuant !== '0' || el.fQuant != 0) return true
-                // return false
-            });
-            console.log('filteredArray:>> ', filteredArray);
-            res.data = filteredArray;
-            if (!res.data?.length) return;
-            console.log('res :>> ', res);
-            */
-            const resultString = JSON.stringify(res); 
-            xmlhttp.send(resultString);
+                const url = `./WebsendOrderQT.hal`; // ?pricelist=${pricelist}&contact=${contact}
+                const xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("POST", url);
+                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                /*
+                console.log('resultData.data :>> ', resultData.data);
+                const filteredArray = resultData.data.filter((el) => {
+                    return el.fQuant !== '0' && el.fQuant !== 0;
+                    // if (!el.fQuant || el.fQuant !== '0' || el.fQuant != 0) return true
+                    // return false
+                });
+                console.log('filteredArray:>> ', filteredArray);
+                res.data = filteredArray;
+                if (!res.data?.length) return;
+                console.log('res :>> ', res);
+                */
+                const resultString = JSON.stringify(res); 
+                xmlhttp.send(resultString);
 
-            const timeoutId = setTimeout(() => {
-                alert('⚠️ Сервер не відповідає. Будь ласка, спробуйте пізніше.\n\nСпробуйте перезавантажити сторінку.');
-
-                sendBtn.classList.remove('loading');
-                sendBtn.disabled = false;
-                $('#confirmOrderModal').modal('hide');
-
-                xmlhttp.abort(); // Прериваємо запит, якщо він триває занадто довго
-            }, timeToServerError); // 20 секунд
-
-            xmlhttp.onreadystatechange = () => {
-
-                if (xmlhttp.readyState !== 4) return; // Чекаємо, поки запит не буде завершений
-                clearTimeout(timeoutId); // Якщо запит завершився, скасовуємо таймер
-
-                const { status } = xmlhttp;
-                console.log('status :>> ', status);
-                if (status!==200 && status!==0) return alert('Щось пішло не так. Зв\'яжіться з адміністратором!'); 
-                if (!isOk) return;// добавление в корзицу
-                if (!xmlhttp.responseText) return;
-                const resp = JSON.parse(xmlhttp.responseText);
-                const { message, status: sts } = resp;
-                if (sts==1 && message!=="") {
-                    $('#modal_message').text(message);
-                    $('#modal').modal('show');
-
-                    const sendBtn = document.getElementById('sendOrderBtn');
+                const timeoutId = setTimeout(() => {
+                    alert('⚠️ Сервер не відповідає. Будь ласка, спробуйте пізніше.\n\nСпробуйте перезавантажити сторінку.');
 
                     sendBtn.classList.remove('loading');
                     sendBtn.disabled = false;
                     $('#confirmOrderModal').modal('hide');
-                    // setTimeout(() => window.location.reload(), 2000);
-                } else {
-                    console.error('error = ', resp);
-                    return alert(message);
-                }
-            
-            };
+
+                    xmlhttp.abort(); // Прериваємо запит, якщо він триває занадто довго
+                }, timeToServerError); // 20 секунд
+
+                xmlhttp.onreadystatechange = () => {
+
+                    if (xmlhttp.readyState !== 4) return; // Чекаємо, поки запит не буде завершений
+                    clearTimeout(timeoutId); // Якщо запит завершився, скасовуємо таймер
+
+                    const { status } = xmlhttp;
+
+                    if (status !== 200) {
+                         alert('Щось пішло не так. Зв\'яжіться з адміністратором!');
+                        throw new Error(`Помилка ${xmlhttp.status}`);
+                    }
+
+                    if (!isOk) return;// добавление в корзицу
+                    if (!xmlhttp.responseText) return;
+                    const resp = JSON.parse(xmlhttp.responseText);
+                    const { message, status: sts } = resp;
+                    if (sts==1 && message!=="") {
+                        $('#modal_message').text(message);
+                        $('#modal').modal('show');
+
+                        const sendBtn = document.getElementById('sendOrderBtn');
+
+                        sendBtn.classList.remove('loading');
+                        sendBtn.disabled = false;
+                        $('#confirmOrderModal').modal('hide');
+                        // setTimeout(() => window.location.reload(), 2000);
+                    } else {
+                        console.error('error = ', resp);
+                        return alert(message);
+                    }
+                
+                };
+            } catch (error) {
+                console.error('error sendOrder', error);
+            } 
         };
                     
         const createOrderByCategory = (itemsByCategoryObj) => {                
