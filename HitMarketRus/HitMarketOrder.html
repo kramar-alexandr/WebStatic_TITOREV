@@ -989,16 +989,10 @@
            for (let { code, qty } of data) {
                if (!qty || qty === '0') continue;
                const quantEl = datatable.$(`#quant_${code}`)[0];
-               quantEl.style.color = 'black';
-
-            //    const item = tableData.find((el) => el.fCode === code);
-
-            //    if(parseInt(item?.fInstock) < parseInt(qty, 10)){
-            //      isExcessInStock = true;
-            //      quantEl.style.color = 'red';
-            //    }
+               
 
                if(quantEl){
+                 quantEl.style.color = 'black';
                  quantEl.value = qty;
                  const [ priceEl ] = datatable.$(`#price1_${code}`);
                  const price = priceEl.innerText;
