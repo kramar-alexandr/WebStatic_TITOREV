@@ -991,17 +991,17 @@
                const quantEl = datatable.$(`#quant_${code}`)[0];
                
 
-               if(quantEl){
-                 quantEl.style.color = 'black';
-                 quantEl.value = qty;
-                 const [ priceEl ] = datatable.$(`#price1_${code}`);
-                 const price = priceEl.innerText;
-                 const [sumEl] = datatable.$(`#sum_${code}`);
-                 sumEl.innerText = Math.round((price * qty) *roundSum)/roundSum; //  price * qty;
-                 totalSum += Math.round((price * qty) *roundSum)/roundSum;// price * qty;
-                 totalQty += parseFloat(qty);
-                 resultData.data.push({fCode:code,fQuant:qty,fPrice:parseFloat(price),fSum:Math.round((price * qty)*roundSum)/roundSum});
-               }
+                if(quantEl){
+                    quantEl.style.color = 'black';
+                    quantEl.value = qty;
+                    const [ priceEl ] = datatable.$(`#price1_${code}`);
+                    const price = priceEl.innerText;
+                    const [sumEl] = datatable.$(`#sum_${code}`);
+                    sumEl.innerText = Math.round((price * qty) *roundSum)/roundSum; //  price * qty;
+                    totalSum += Math.round((price * qty) *roundSum)/roundSum;// price * qty;
+                    totalQty += parseFloat(qty);
+                    resultData.data.push({fCode:code,fQuant:qty,fPrice:parseFloat(price),fSum:Math.round((price * qty)*roundSum)/roundSum});
+                }
            }
            const initedData = datatable.rows().data().toArray();
            resultData.totalSum = Math.round(totalSum * roundSum)/roundSum;
