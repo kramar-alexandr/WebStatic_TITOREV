@@ -1272,8 +1272,10 @@
           if(frate){
             const ratefield = document.querySelector("#ratefield");
             const ratediv = document.querySelector("#ratediv");
-            ratefield.innerHTML = frate;
-            ratediv.style.display = 'flex';
+            if(ratefield){
+                ratefield.innerHTML = frate;
+                ratediv.style.display = 'flex';
+            }
           }
           
           
